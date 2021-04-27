@@ -6,14 +6,15 @@ namespace Chessboard
     {
         static void Main(string[] args)
         {
-            Console.ReadLine();
+            /*Console.ReadLine();
 
             foreach (string s in args)
             {
                 Console.ReadKey(s);
                 Console.WriteLine($"Arg: {s}");
             }
-            Chessboard chessboard = new Chessboard();
+            */
+            Chessboard chessboard = new Chessboard(5,6);
             chessboard.OutputChessboard();
 
             Console.WriteLine("Hello World!");
@@ -23,15 +24,18 @@ namespace Chessboard
         {
             private int numberOfRows = 0;
             private int numberOfColumns = 0;
+            
             public Chessboard(int numberOfRows, int numberOfColumns)
             {
-
+                this.numberOfRows = numberOfRows;
+                this.numberOfColumns = numberOfColumns;
             }
+
             public void OutputChessboard()
             {
-                for (int i = 0; i < this.numberOfRows; i++)
+                for (int i = 0; i < numberOfRows; i++)
                 {
-                    for (j = 0; j < numberOfColumns; j++)
+                    for (int j = 0; j < numberOfColumns; j++)
                     {
                         Console.Write("* ");
                     }
