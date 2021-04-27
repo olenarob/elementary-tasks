@@ -6,43 +6,31 @@ namespace AnalyzeEnvelopes
     {
         static void Main(string[] args)
         {
+            
+            bool flag = true;
+            if (args.Length < 4)
+            {
+                flag = false;
+                args = new string[4];
+            }
             double[] parameters = new double[4];
-            int i = 0;
-
             string desireToContinue;
             do
             {
-                for (i = 0; i < 4; i++)
+                               
+                for (int i = 0; i < 4; i++)
                 {
-                    try
+                    if (flag == false)
                     {
-                        if (args.Length >= 4)
-                        {
-                            parameters[i] = double.Parse(args[i]);
-                            Console.WriteLine($"Parameter{i}: {parameters[i]}");
-                        }
-                        else
-                        {
-                            Console.Write($"Please input parameter{i}: ");
-                            parameters[i] = double.Parse(Console.ReadLine());
-                        }
-                        if (parameters[i] <= 0)
-                        {
-                            throw new ArgumentOutOfRangeException("Size of envelope must be greater than zero!");
-                        }
+                        Console.Write($"Please input parameter {i}: ");
+                        args[i] = Console.ReadLine();
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        if (args.Length < 4)
-                        {
-                            i--;
-                        }
-                        else break;
-                    }
-                }
+                    parameters[i] = new DoubleArgument().Parse(args[i]);
 
-                args = new string[1];
+
+                }
+                                
+                //double[] parameters = new Arguments(4).Parse(args);
 
                 Envelope envelope1 = new Envelope(parameters[0], parameters[1]);
                 Envelope envelope2 = new Envelope(parameters[2], parameters[3]);
@@ -106,5 +94,73 @@ namespace AnalyzeEnvelopes
             }
             return false;
         }
+    }
+    /*
+    public class Arguments
+    {
+        private int quantity;
+
+        public Arguments (int quantity)
+        {
+            this.quantity = quantity;
+        }
+        
+        
+        
+        
+        public double[] Parse (string[] args)
+        {
+            var result = new double[quantity];
+            
+            // parsing logic of args
+            for (int i = 0; i < quantity; i++)
+            {
+                try
+                {
+                    result[i] = double.Parse(args[i]);
+                    if (result[i] <= 0)
+                    {
+                        throw new ArgumentOutOfRangeException("Size of envelope must be greater than zero!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            
+            return result;
+        }
+        
+    }
+    */
+    public class DoubleArgument
+    {
+        
+        private double _argument;
+         
+        
+        
+        public double Parse(string s)
+        {
+            double result = 0;
+            // parsing logic of args
+            
+                try
+                {
+                    result = double.Parse(s);
+                    if (result <= 0)
+                    {
+                        throw new ArgumentOutOfRangeException("Side of envelope must be greater than zero!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            
+            return result;
+        }
+
     }
 }
