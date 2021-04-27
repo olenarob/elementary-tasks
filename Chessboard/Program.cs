@@ -35,6 +35,8 @@ namespace Chessboard
             {
                 for (int i = 0; i < numberOfRows; i++)
                 {
+                    if ((i % 2) == 1)
+                        Console.Write(" ");
                     for (int j = 0; j < numberOfColumns; j++)
                     {
                         Console.Write("* ");
