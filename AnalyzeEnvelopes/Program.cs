@@ -7,26 +7,19 @@ namespace AnalyzeEnvelopes
         static void Main(string[] args)
         {
             
-            bool flag = true;
-            if (args.Length < 4)
-            {
-                flag = false;
-                args = new string[4];
-            }
+            args = new string[4];
             double[] parameters = new double[4];
+
             string desireToContinue;
             do
             {
                                
                 for (int i = 0; i < 4; i++)
                 {
-                    if (flag == false)
-                    {
-                        Console.Write($"Please input parameter {i}: ");
-                        args[i] = Console.ReadLine();
-                    }
+                    Console.Write($"Please input parameter {i}: ");
+                    args[i] = Console.ReadLine();
+                    
                     parameters[i] = new DoubleArgument().Parse(args[i]);
-
 
                 }
                                 
