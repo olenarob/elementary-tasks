@@ -15,7 +15,6 @@ namespace Chessboard
                 Argument.TryParseInt(args[0], 1, Console.LargestWindowWidth, out width) &&
                 Argument.TryParseInt(args[1], 1, Console.LargestWindowHeight, out height))
             {
-                Console.WriteLine(args.Length);
                 Chessboard chessboard = new Chessboard(width, height);
                 chessboard.PrintChessboard();
             }
@@ -23,35 +22,38 @@ namespace Chessboard
             {
                 Console.WriteLine("Usage: Chessboard.exe [width] [height]");
             }
-            
-            //Console.ReadKey();
-
         }
 
         class Chessboard
         {
-            private int numberOfRows;
-            private int numberOfColumns;
+            private int _height;
+            private int _width;
             
             public Chessboard(int width, int height)
             {
-                numberOfColumns = width;
-                numberOfRows = height;
+                _width = width;
+                _height = height;
             }
 
             public void PrintChessboard()
             {
-                Console.SetBufferSize(numberOfColumns+1,numberOfRows);
-
-                for (int i = 0; i < numberOfRows; i++)
+                for (int i = 0; i < _height; i++)
                 {
-                    if ((i % 2) == 1)
+                    for (int j = 0; j < _width; j++)
                     {
-                        Console.Write(" ");
-                    }
-                    for (int j = 0; j < numberOfColumns; j++)
-                    {
-                        Console.Write("* ");
+                        if (i % 2 == 0)
+                        {
+                            if (j % 2 == 0)
+                            {
+                                Console.Write("*");
+                            }
+                            else Console.Write(" ");
+                        }
+                        else if (j % 2 == 0)
+                        {
+                            Console.Write(" ");
+                        }
+                        else Console.Write("*");
                     }
                     Console.WriteLine();
                 }
