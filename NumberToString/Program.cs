@@ -6,7 +6,7 @@ namespace NumberToString
     {
         static void Main(string[] args)
         {
-            var value = 42;
+            var value = 950615;
             Console.Write(new Ones(value));
             //Console.WriteLine(new Tens(value));
         }
@@ -16,29 +16,65 @@ namespace NumberToString
         protected enum NumbersName
         {
             One = 1, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten,
-            Eleven, Twelve, Thirteen, Fourteen, Fifteen, Sixteen, Seventeen, Eighteen, Nineteen,
-            Twenty, Thirty = 30, Fourty = 40, Fifty = 50, Sixty = 60, Seventy = 70, Eighty = 80,
-            Ninety = 90
+            Eleven, Twelve, Thirteen, Fourteen, Fifteen, Sixteen, Seventeen,
+            Eighteen, Nineteen, Twenty, Thirty = 30, Fourty = 40, Fifty = 50,
+            Sixty = 60, Seventy = 70, Eighty = 80, Ninety = 90, Hundred = 100,
+            Thousand = 1000, Million = 1000000, Billion = 1000000000
         }
 
     }
 
     public class Ones : Numbers
     {
-        private NumbersName _ones;
+        private int _ones;
         public Ones(int value)
         {
-            _ones = (NumbersName)(value % 100);
-            
+            _ones = value;            
         }
-
+       
+        
         public override string ToString()
         {
-            if (!Enum.IsDefined(typeof(NumbersName), _ones))
+            string s = string.Empty;
+
+            int dividend = (int)_ones; // 1925
+            int divisor = 1000;
+            int remainder = dividend % divisor; //925
+            int bases = dividend - remainder; // 1000
+            
+            do
             {
-                _ones = ((int)_ones) / 10;
+                if (bases == 0)
+                {
+                    if (!Enum.IsDefined(typeof(NumbersName), remainder))
+                    {
+                        divisor = divisor / 10;         // 100 10
+                        bases = remainder / divisor * divisor; //900 20
+                        remainder = remainder % divisor; // 25 5
+                        if (Enum.IsDefined(typeof(NumbersName), bases))
+                        {
+                            s = s + bases.ToString() + " " + remainder.ToString();
+                            bases = 0;
+                            remainder = 0;
+                        }
+                    }
+                    else
+                    {
+                        s = s + remainder.ToString();
+                        remainder = 0;
+                    }
+                }
+                else
+                {
+                    int quotient = bases / divisor; //1 9
+                    s = s + quotient.ToString() + " " + divisor.ToString() + " ";
+                    bases = 0;
+                }
             }
-            return _ones.ToString();
+            while (remainder != 0) ;
+
+                return s;
+            
         }
     }
 
