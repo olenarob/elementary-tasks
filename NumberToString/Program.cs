@@ -6,7 +6,7 @@ namespace NumberToString
     {
         static void Main(string[] args)
         {
-            var value = 950615;
+            var value = int.Parse(args[0]);
             Console.Write(new Ones(value));
             //Console.WriteLine(new Tens(value));
         }
@@ -31,14 +31,36 @@ namespace NumberToString
         {
             _ones = value;            
         }
-       
-        
         public override string ToString()
         {
             string s = string.Empty;
+            int div = 1000000;
+            int v = (int)_ones;
+            do
+            {
+                int temp = v / div;
+                int rem = v % div;
+            
+                if (temp != 0)
+                {
+                    s = s + " " + ToStringInternal(temp) + " " + div.ToString() + " ";
+                    v = v - temp * div;
+                }
+                
+                //temp = rem / div;
+                //rem = (temp * div) % div
+                div = div / 1000;
+            }
+            while (div != 1);
+            s = s + ToStringInternal((int)_ones % 1000);
+            return s;
+        }
+        private string ToStringInternal(int param)
+        {
+            string s = string.Empty;
 
-            int dividend = (int)_ones; // 1925
-            int divisor = 1000;
+            int dividend = param; // 1925
+            int divisor = 100;
             int remainder = dividend % divisor; //925
             int bases = dividend - remainder; // 1000
             
@@ -53,7 +75,7 @@ namespace NumberToString
                         remainder = remainder % divisor; // 25 5
                         if (Enum.IsDefined(typeof(NumbersName), bases))
                         {
-                            s = s + bases.ToString() + " " + remainder.ToString();
+                            s = s + bases.ToString() + " " + remainder.ToString() + " ";
                             bases = 0;
                             remainder = 0;
                         }
@@ -73,41 +95,7 @@ namespace NumberToString
             }
             while (remainder != 0) ;
 
-                return s;
-            
-        }
-    }
-
-    public class Thousents
-    {
-        private Tens _tens;
-        public Thousents(int value)
-        {
-            _tens = new Tens((value % 10000) / 1000);
-        }
-
-        public override string ToString()
-        {
-            return _tens.ToString() + " Thousents ";
-        }
-    }
-
-    public class Tens
-    {
-        private int _tens;
-        public Tens(int value)
-        {
-            _tens = (value % 100) / 10;
-        }
-
-        public override string ToString()
-        {
-            switch (_tens)
-            {
-                case 1: return "ten ";
-                case 2: return "twony ";
-                default: return _tens.ToString();
-            }
+            return s;
         }
     }
 }
