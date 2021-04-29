@@ -31,10 +31,15 @@ namespace NumberToString
         {
             _ones = value;            
         }
+        static string ToName (int value)
+        {
+            return ((NumbersName)value).ToString();
+        }
+
         public override string ToString()
         {
             string s = string.Empty;
-            int div = 1000000;
+            int div = 1_000_000_000;
             int v = (int)_ones;
             do
             {
@@ -43,23 +48,19 @@ namespace NumberToString
             
                 if (temp != 0)
                 {
-                    s = s + " " + ToStringInternal(temp) + " " + div.ToString() + " ";
+                    s = s + " " + ToStringInternal(temp) + " " + ToName(div) + " ";
                     v = v - temp * div;
                 }
-                
-                //temp = rem / div;
-                //rem = (temp * div) % div
                 div = div / 1000;
             }
             while (div != 1);
             s = s + ToStringInternal((int)_ones % 1000);
             return s;
         }
-        private string ToStringInternal(int param)
+        private string ToStringInternal(int dividend)
         {
             string s = string.Empty;
 
-            int dividend = param; // 1925
             int divisor = 100;
             int remainder = dividend % divisor; //925
             int bases = dividend - remainder; // 1000
