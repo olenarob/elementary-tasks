@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArgumentsProcessor;
+using System;
 
 namespace NumberToString
 {
@@ -6,41 +7,45 @@ namespace NumberToString
     {
         static void Main(string[] args)
         {
-            var value = int.Parse(args[0]);
-            Console.Write(new Ones(value));
-            //Console.WriteLine(new Tens(value));
+            int value;
+            
+            if ((args.Length > 0) &&
+                Argument.TryParseInt(args[0], 1, int.MaxValue, out value))
+            {
+                Console.Write(new Numbers(value));
+            }
+            else
+            {
+                Console.WriteLine("Usage: NumberToString.exe [number]");
+            }
         }
     }
     public class Numbers
     {
-        protected enum NumbersName
+        enum NumbersName
         {
             One = 1, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten,
             Eleven, Twelve, Thirteen, Fourteen, Fifteen, Sixteen, Seventeen,
             Eighteen, Nineteen, Twenty, Thirty = 30, Fourty = 40, Fifty = 50,
             Sixty = 60, Seventy = 70, Eighty = 80, Ninety = 90, Hundred = 100,
-            Thousand = 1000, Million = 1000000, Billion = 1000000000
+            Thousand = 1_000, Million = 1_000_000, Billion = 1_000_000_000
         }
-
-    }
-
-    public class Ones : Numbers
-    {
-        private int _ones;
-        public Ones(int value)
+    
+        private int _number;
+        public Numbers (int value)
         {
-            _ones = value;            
+            _number = value;            
         }
         static string ToName (int value)
         {
             return ((NumbersName)value).ToString();
         }
-
         public override string ToString()
         {
-            string s = string.Empty;
             int div = 1_000_000_000;
-            int v = (int)_ones;
+            int v = (int)_number;
+
+            string s = string.Empty;
             do
             {
                 int temp = v / div;
@@ -48,22 +53,23 @@ namespace NumberToString
             
                 if (temp != 0)
                 {
-                    s = s + " " + ToStringInternal(temp) + " " + ToName(div) + " ";
+                    s += ToStringInternal(temp) + " " + ToName(div) + " ";
                     v = v - temp * div;
                 }
                 div = div / 1000;
             }
             while (div != 1);
-            s = s + ToStringInternal((int)_ones % 1000);
+
+            s += ToStringInternal((int)_number % 1000);
             return s;
         }
-        private string ToStringInternal(int dividend)
+        private string ToStringInternal(int dividend) // 999
         {
             string s = string.Empty;
 
             int divisor = 100;
-            int remainder = dividend % divisor; //925
-            int bases = dividend - remainder; // 1000
+            int remainder = dividend % divisor; // 99
+            int bases = dividend - remainder; // 900
             
             do
             {
@@ -71,26 +77,27 @@ namespace NumberToString
                 {
                     if (!Enum.IsDefined(typeof(NumbersName), remainder))
                     {
-                        divisor = divisor / 10;         // 100 10
-                        bases = remainder / divisor * divisor; //900 20
-                        remainder = remainder % divisor; // 25 5
+                        divisor = divisor / 10;       //10  
+                        bases = remainder / divisor * divisor; //90
+                        remainder = remainder % divisor;//9
+                        
                         if (Enum.IsDefined(typeof(NumbersName), bases))
                         {
-                            s = s + bases.ToString() + " " + remainder.ToString() + " ";
+                            s += ToName(bases) + " " + ToName(remainder) + " ";
                             bases = 0;
                             remainder = 0;
                         }
                     }
                     else
                     {
-                        s = s + remainder.ToString();
+                        s += ToName(remainder);
                         remainder = 0;
                     }
                 }
                 else
                 {
-                    int quotient = bases / divisor; //1 9
-                    s = s + quotient.ToString() + " " + divisor.ToString() + " ";
+                    int quotient = bases / divisor;
+                    s += ToName(quotient) + " " + ToName(divisor) + " ";
                     bases = 0;
                 }
             }
