@@ -18,15 +18,17 @@ namespace NumberToString
         {
             _number = value;            
         }
+        
         static string ToName (int number)
         {
-            return ((NumbersName)number).ToString();
+            return Enum.GetName((NumbersName)number);
         }
+        
         public override string ToString()
         {
-            string s = string.Empty;
+            string text = string.Empty;
 
-            int value = (int)_number;
+            int value = _number;
             int divisor = 1_000_000_000;
             
             do
@@ -35,11 +37,11 @@ namespace NumberToString
             
                 if (tripleDigitNumber != 0)
                 {
-                    s += TripleDigitNumberToString(tripleDigitNumber);
+                    text += TripleDigitNumberToText(tripleDigitNumber);
                     
                     if (divisor > 1)
                     {
-                        s += " " + ToName(divisor) + "\n";
+                        text += " " + ToName(divisor) + "\n";
                     }
                     value -= tripleDigitNumber * divisor; //remainder
                 }
@@ -48,35 +50,34 @@ namespace NumberToString
             }
             while (divisor != 0);
 
-            return s;
+            return text.ToLower();
         }
-        private static string TripleDigitNumberToString(int tripleNumber)
+        private static string TripleDigitNumberToText(int tripleNumber)
         {
-            string s = string.Empty;
+            string text = string.Empty;
             
             int hundreds = tripleNumber / 100;
             int remainder = tripleNumber % 100;
             
             if (hundreds != 0)
             {
-                s += ToName(hundreds) + " " + ToName(100) + " ";
+                text += ToName(hundreds) + " " + ToName(100) + " ";
             }
             
             if (remainder != 0)
             {
                 if (Enum.IsDefined(typeof(NumbersName), remainder))
                 {
-                    s += ToName(remainder);
+                    text += ToName(remainder);
                 }
                 else
                 {
                     int tens = remainder / 10 * 10;
                     remainder %= 10;
-                    s += ToName(tens) + " " + ToName(remainder);
+                    text += ToName(tens) + " " + ToName(remainder);
                 }
             }
-
-            return s;
+            return text;
         }
     }
 }
