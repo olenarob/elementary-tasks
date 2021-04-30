@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArgumentsProcessor;
+using System;
 
 namespace AnalyzeEnvelopes
 {
@@ -7,7 +8,7 @@ namespace AnalyzeEnvelopes
         static void Main(string[] args)
         {
             args = new string[4];
-            double[] parameters = new double[4];
+            var parameters = new double[4];
 
             string desireToContinue;
             do
@@ -17,11 +18,11 @@ namespace AnalyzeEnvelopes
                     Console.Write($"Please input parameter {i}: ");
                     args[i] = Console.ReadLine();
                     
-                    parameters[i] = new DoubleArgument().Parse(args[i]);
+                    parameters[i] = Argument.Parse(args[i]);
                 }
 
-                Envelope envelope1 = new Envelope(parameters[0], parameters[1]);
-                Envelope envelope2 = new Envelope(parameters[2], parameters[3]);
+                var envelope1 = new Envelope(parameters[0], parameters[1]);
+                var envelope2 = new Envelope(parameters[2], parameters[3]);
 
                 int smallEnvelope = 0;
                 int bigEnvelope = 0;
@@ -50,28 +51,6 @@ namespace AnalyzeEnvelopes
                 desireToContinue = Console.ReadLine();
             }
             while (desireToContinue == "y");
-        }
-    }
-    public class DoubleArgument
-    {
-        private double _argument;
-        public double Parse(string s)
-        {
-            double result = 0;
-            
-            try
-            {
-                result = double.Parse(s);
-                if (result <= 0)
-                {
-                    throw new ArgumentOutOfRangeException("Side of envelope must be greater than zero!");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return result;
         }
     }
 }
