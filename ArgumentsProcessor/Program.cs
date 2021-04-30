@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ArgumentsProcessor
+﻿namespace ArgumentsProcessor
 {
     class Program
     {
@@ -8,28 +6,5 @@ namespace ArgumentsProcessor
         {
             
         }
-    }
-
-    public class Argument
-    {
-        
-        public static bool TryParseInt(string s, int min, int max, out int value)
-        {
-            bool success = true;
-            try
-            {
-                    value = int.Parse(s);
-
-                    if ((value < min) || (value > max))
-                        throw new ArgumentOutOfRangeException();
-            }
-            catch
-            {
-                success = false;
-                value = 0;
-            }
-            return success;
-        }
-
     }
 }
