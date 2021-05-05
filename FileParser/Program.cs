@@ -9,7 +9,7 @@ namespace FileParser
         {
             int nextByte;
             string s = args[1];
-            int count = 0;
+            int counter = 0;
 
             using (FileStream fs = new FileStream(args[0], FileMode.Open, FileAccess.Read))
             {
@@ -43,13 +43,13 @@ namespace FileParser
                         }
                         if (s1 == s)
                         {
-                            count++;
+                            counter++;
                         }
                         fs.Seek(-(i-1), SeekOrigin.Current);
                     }
                 }
             }
-            Console.WriteLine(@$"There are {count} strings ""{s}"" in {args[0]}.");
+            Console.WriteLine(@$"There are {counter} strings ""{s}"" in {args[0]}.");
         }
     }
 }
