@@ -9,43 +9,42 @@ namespace NumericalSequence
             int n = int.Parse(args[0]);
             int m = int.Parse(args[1]);
 
-            int lowerRange = (int)Math.Ceiling(Math.Sqrt(m));
+            int minSqr = (int)Math.Ceiling(Math.Sqrt(m));
             
             Sequence naturalNumbers = new NaturalNumbers();
-            naturalNumbers.DisplaySequence(lowerRange, length: n);
-            naturalNumbers.DisplaySequence();
+            naturalNumbers.DisplaySequenceOfLength(n, minSqr);
 
             Sequence fibonacci = new Fibonaccy();
-            fibonacci.DisplaySequence(length: n);
-            fibonacci.DisplaySequence(13, 1000);
+            fibonacci.DisplaySequenceOfLength(length: n);
+            fibonacci.DisplaySequenceInRange(n, m);
         }
 
         public abstract class Sequence
         {
             public abstract int CommonElement(int n);
 
-            public void DisplaySequenceOfLength (int index, int length)
+            public void DisplaySequenceOfLength (int length, int lowerRange = 0)
             {
-                for (int i = index; i < index + length; i++)
+                int i = 0;
+                while (CommonElement(i) < lowerRange)
+                {
+                    i++;
+                }
+                int firstIndex = i;
+
+                for (i = firstIndex; i < firstIndex + length; i++)
                 {
                     Console.Write($"{CommonElement(i)} ");
                 }
                 Console.WriteLine();
             }
-            public void DisplaySequence(int lowerRange = 0, int upperRange = int.MaxValue, int length = 0)
+            public void DisplaySequenceInRange(int lowerRange, int upperRange)
             {
-                int index = 0;
                 int i = 0;
-                bool flag = true;
-                while (((length == 0) && (CommonElement(i) <= upperRange)) || (i < index + length))
+                while (CommonElement(i) <= upperRange)
                 {
                     if (CommonElement(i) >= lowerRange)
                     {
-                        if (flag)
-                        {
-                            index = i;
-                            flag = false;
-                        }
                         Console.Write($"{CommonElement(i)} ");
                     }
                     i++;
