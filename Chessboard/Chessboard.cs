@@ -4,10 +4,10 @@ namespace Chessboard
 {
     class Chessboard
     {
-        private int _height;
-        private int _width;
+        private ushort _height;
+        private ushort _width;
 
-        public Chessboard(int width, int height)
+        public Chessboard(ushort width, ushort height)
         {
             _width = width;
             _height = height;
