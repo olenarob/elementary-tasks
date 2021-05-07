@@ -6,10 +6,10 @@ namespace ArgumentsProcessor
     {
         static void Main(string[] args)
         {
-            int a = 0;
+            uint a = 0;
             double d = 0;
             
-            bool b = Argument.TryParse<int>(args[0], -30, 10, out a);
+            bool b = Argument.TryParse<uint>(args[0], 0, 10, out a);
             Console.WriteLine(a + " " + b);
             
             b = Argument.TryParse<double>(args[0], 2, 10, out d);

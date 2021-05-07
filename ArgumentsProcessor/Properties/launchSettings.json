@@ -2,7 +2,7 @@
   "profiles": {
     "ArgumentsProcessor": {
       "commandName": "Project",
-      "commandLineArgs": "-25"
+      "commandLineArgs": "15"
     }
   }
 }
