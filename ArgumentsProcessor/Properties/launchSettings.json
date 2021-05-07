@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ArgumentsProcessor": {
+      "commandName": "Project",
+      "commandLineArgs": "-25"
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
 namespace ArgumentsProcessor
 {
-    public class Argument
+    public class Argument 
     {
         public static double Parse(string s)
         {
@@ -39,6 +39,23 @@ namespace ArgumentsProcessor
             }
             return success;
         }
-        
+        public static bool TryParse<T>(string s, T min, T max, out T value) where T : IComparable
+        {
+            value = default;
+            bool success = true;
+            try
+            {
+                value = (T)Convert.ChangeType(s, typeof(T));
+
+                //if ((value < min) || (value > max))
+                  //  throw new ArgumentOutOfRangeException();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                success = false;
+            }
+            return success;
+        }
     }
 }
