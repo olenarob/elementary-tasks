@@ -2,7 +2,7 @@
 
 namespace ArgumentsProcessor
 {
-    public class Argument 
+    public class Argument
     {
         public static double Parse(string s)
         {
@@ -39,7 +39,8 @@ namespace ArgumentsProcessor
             }
             return success;
         }
-        public static bool TryParse<T>(string s, T min, T max, out T value) where T : IComparable
+        public static bool TryParse<T>(string s, T min, T max, out T value)
+            where T : struct, IComparable<T>, IConvertible
         {
             value = default;
             bool success = true;
@@ -47,8 +48,8 @@ namespace ArgumentsProcessor
             {
                 value = (T)Convert.ChangeType(s, typeof(T));
 
-                //if ((value < min) || (value > max))
-                  //  throw new ArgumentOutOfRangeException();
+                if (value.CompareTo(min) < 0 || value.CompareTo(max) > 0)
+                    throw new ArgumentOutOfRangeException();
             }
             catch (Exception ex)
             {
