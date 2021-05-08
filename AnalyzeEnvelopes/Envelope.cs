@@ -19,12 +19,17 @@
             }
         }
 
-        public bool CanBeInsertedInto(Envelope that)
+        public bool CanBeInsertedInto(Envelope that, out int n1, out int n2)
         {
             if ((this._shortSide < that._shortSide) && (this._longSide < that._longSide))
             {
+                n1 = 1;
+                n2 = 2;
                 return true;
             }
+            else
+            n1 = 0;
+            n2 = 0;
             return false;
         }
     }
