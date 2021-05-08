@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ArgumentsProcessor\ArgumentsProcessor.csproj" />
     <ProjectReference Include="..\Sequence\Sequence.csproj" />
   </ItemGroup>
 

@@ -6,31 +6,30 @@ namespace Sequence
     {
         public abstract int CommonElement(int n);
 
-        public void DisplaySequenceOfLength(int length, int lowerRange = 0)
+        public void DisplaySequenceOfLength(int length, int lowerRange)
         {
-            int i = 0;
-            while (CommonElement(i) < lowerRange)
+            int firstIndex = 0;
+            for (int i = 0; i < firstIndex + length; i++)
             {
-                i++;
-            }
-            int firstIndex = i;
-
-            for (i = firstIndex; i < firstIndex + length; i++)
-            {
-                Console.Write($"{CommonElement(i)} ");
+                if (CommonElement(i) < lowerRange)
+                {
+                    firstIndex++;
+                }
+                else
+                {
+                    Console.Write($"{CommonElement(i)} ");
+                }
             }
             Console.WriteLine();
         }
         public void DisplaySequenceInRange(int lowerRange, int upperRange)
         {
-            int i = 0;
-            while (CommonElement(i) <= upperRange)
+            for (int i = 0; CommonElement(i) <= upperRange; i++)
             {
                 if (CommonElement(i) >= lowerRange)
                 {
                     Console.Write($"{CommonElement(i)} ");
                 }
-                i++;
             }
             Console.WriteLine();
         }
