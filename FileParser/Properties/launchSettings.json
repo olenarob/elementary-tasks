@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "FileParser": {
+      "commandName": "Project",
+      "commandLineArgs": "text.txt Hell",
+      "workingDirectory": "C:\\Users\\Alena\\source\\elementary-tasks\\FileParser"
+    }
+  }
+}
