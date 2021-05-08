@@ -10,10 +10,10 @@ namespace Chessboard
             ushort width;
             ushort height;
             const ushort minChessboardSize = 1;
-
+            Console.Clear();
             if ((args.Length == 2) &&
-                Argument.TryParse<ushort>(args[0], minChessboardSize, Console.LargestWindowWidth, out width) &&
-                Argument.TryParse(args[1], minChessboardSize, Console.LargestWindowHeight, out height))
+                Argument.TryParse<ushort>(args[0], minChessboardSize, (ushort)(Console.LargestWindowWidth), out width) &&
+                Argument.TryParse<ushort>(args[1], minChessboardSize, (ushort)Console.LargestWindowHeight, out height))
             {
                 var chessboard = new Chessboard(width, height);
                 chessboard.PrintChessboard();
