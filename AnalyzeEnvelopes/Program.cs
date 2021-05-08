@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArgumentsProcessor;
+using System;
 
 namespace AnalyzeEnvelopes
 {
@@ -21,8 +22,8 @@ namespace AnalyzeEnvelopes
                     // ToInt32 can throw FormatException or OverflowException.
                     try
                     {
-                        lengthOfSide[i] = Convert.ToDouble(input);
-                        if (lengthOfSide[i] <= 0)
+                        lengthOfSide[i] = Argument.Parse<double>(input,0,Double.MaxValue);
+                        if (lengthOfSide[i] == 0)
                         {
                             throw new ArgumentOutOfRangeException();
                         }
