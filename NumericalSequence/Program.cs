@@ -15,14 +15,33 @@ namespace NumericalSequence
                 uint minSqr = (uint)Math.Ceiling(Math.Sqrt(m));
 
                 var naturalNumbers = new NaturalNumbers();
-                NaturalNumbers.DisplaySeries(naturalNumbers, n, minSqr);
+               
+                foreach (int number in NaturalNumbers.GetSeriesOfLength(naturalNumbers, n, minSqr))
+                {
+                    Console.Write($"{number} ");
+                }
+                Console.WriteLine();
+
                 var naturalNumbers1 = new NaturalNumbers();
-                NaturalNumbers.DisplaySeries(naturalNumbers1, 0, minSqr, m);
+                foreach (int number in NaturalNumbers.GetSeriesInRange(naturalNumbers1, minSqr, m))
+                {
+                    Console.Write($"{number} ");
+                }
+                Console.WriteLine();
 
                 var fibonacci = new Fibonacci();
-                Fibonacci.DisplaySeries(fibonacci, n);
+                foreach (int number in Fibonacci.GetSeriesOfLength(fibonacci, n))
+                {
+                    Console.Write($"{number} ");
+                }
+                Console.WriteLine();
+                
                 var fibonacci1 = new Fibonacci();
-                Fibonacci.DisplaySeries(fibonacci1, 0, minSqr, m);
+                foreach (int number in Fibonacci.GetSeriesInRange(fibonacci1, minSqr, m))
+                {
+                    Console.Write($"{number} ");
+                }
+                Console.WriteLine();
             }
         }
     }

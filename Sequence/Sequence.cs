@@ -7,40 +7,33 @@ namespace Sequence
     {
         public abstract uint GetNext();
                     
-        public static IEnumerable<uint> GetSeries(Sequence s, uint length = 0,
-                            uint lowerRange = 0, uint upperRange = uint.MaxValue)
+        public static IEnumerable<uint> GetSeriesOfLength(Sequence s, uint length, uint lowerRange = 0)
         {
-            uint n = length;
             uint j = 0;
-            uint tmp;
-            for (uint i = 0; i <= n + j; i++)
+            uint tmp = s.GetNext();
+            for (uint i = 0; i < length + j; i++)
             {
-                tmp = s.GetNext();
                 if (tmp < lowerRange)
                 {
                     j++;
                 }
                 else
+                    yield return tmp;
+                tmp = s.GetNext();
+            }    
+        }
+        public static IEnumerable<uint> GetSeriesInRange(Sequence s, uint lowerRange, uint upperRange)
+        {
+            uint tmp = s.GetNext();
+            
+            while (tmp <= upperRange)
+            {
+                if (tmp >= lowerRange)
                 {
-                    if (length == 0)
-                    {
-                        if (tmp <= upperRange)
-                        {
-                            n++;
-                        }
-                    }
                     yield return tmp;
                 }
+                tmp = s.GetNext();
             }
-        }
-        public static void DisplaySeries(Sequence s, uint length = 0,
-                            uint lowerRange = 0, uint upperRange = uint.MaxValue)
-        {
-            foreach (int number in GetSeries(s, length, lowerRange, upperRange))
-            {
-                Console.Write($"{number} ");
-            }
-            Console.WriteLine();
         }
     }
     public class NaturalNumbers : Sequence
