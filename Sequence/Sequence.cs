@@ -27,7 +27,7 @@ namespace Sequence
             Reset();
         }
         
-        public void DisplaySeries(uint length = 0, uint lowerRange = 0, uint upperRange = uint.MaxValue)
+        public void DisplaySequence(uint length = 0, uint lowerRange = 0, uint upperRange = uint.MaxValue)
         {
             foreach (int number in GetSequence(length, lowerRange, upperRange))
             {

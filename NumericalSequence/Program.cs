@@ -15,12 +15,12 @@ namespace NumericalSequence
                 uint minSqr = (uint)Math.Ceiling(Math.Sqrt(m));
 
                 var naturalNumbers = new NaturalNumbers();
-                naturalNumbers.DisplaySeries(n, minSqr);
-                naturalNumbers.DisplaySeries(0, minSqr, m);
+                naturalNumbers.DisplaySequence(n, minSqr);
+                naturalNumbers.DisplaySequence(0, minSqr, m);
 
                 var fibonacci = new Fibonacci();
-                fibonacci.DisplaySeries(n);
-                fibonacci.DisplaySeries(0, minSqr, m);
+                fibonacci.DisplaySequence(n);
+                fibonacci.DisplaySequence(0, minSqr, m);
             }
         }
     }
