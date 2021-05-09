@@ -5,48 +5,57 @@ namespace Sequence
 {
     public abstract class Sequence
     {
-        protected abstract uint GetNext();
-                    
-        public IEnumerable<uint> GetSeries(uint length = 0, uint lowerRange = 0, uint upperRange = uint.MaxValue)
+        protected abstract uint GetNextElement();
+        
+        protected abstract void Reset();
+        
+        public IEnumerable<uint> GetSequence(uint length = 0, uint lowerRange = 0, uint upperRange = uint.MaxValue)
         {
             uint n = length;
-            uint j = 0;
-            uint tmp = GetNext();
-            for (uint i = 0; (n == 0) ? (tmp <= upperRange) : (i < length + j); i++)
+            uint firstIndex = 0;
+            uint tmp = GetNextElement();
+            for (uint i = 0; (n == 0) ? (tmp <= upperRange) : (i < firstIndex + length); i++)
             {
                 if (tmp < lowerRange)
                 {
-                    j++;
+                    firstIndex++;
                 }
                 else
                     yield return tmp;
-                tmp = GetNext();
-            }    
+                tmp = GetNextElement();
+            }
+            Reset();
         }
-       
+        
         public void DisplaySeries(uint length = 0, uint lowerRange = 0, uint upperRange = uint.MaxValue)
         {
-            foreach (int number in GetSeries(length, lowerRange, upperRange))
+            foreach (int number in GetSequence(length, lowerRange, upperRange))
             {
                 Console.Write($"{number} ");
             }
             Console.WriteLine();
         }
     }
+    
     public class NaturalNumbers : Sequence
     {
         private uint _a = 0;
-        protected override uint GetNext()
+        protected override uint GetNextElement()
         {
             return _a++;
         }
+        
+        protected override void Reset()
+        {
+            _a = 0;
+        }
     }
-    
+
     public class Fibonacci : Sequence
     {
         private uint _a = 0;
         private uint _b = 0;
-        protected override uint GetNext()
+        protected override uint GetNextElement()
         {
             uint c = _a + _b;
             if (c == 0)
@@ -59,6 +68,12 @@ namespace Sequence
                 _b = c;
             }
             return c;
+        }
+        
+        protected override void Reset()
+        {
+            _a = 0;
+            _b = 0;
         }
     }
 }
