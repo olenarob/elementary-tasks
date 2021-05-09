@@ -9,13 +9,27 @@ namespace Chessboard
 
         public Chessboard(ushort width, ushort height)
         {
-            _width = width;
-            _height = height;
+            this._width = width;
+           // this._height = height;
         }
 
-        public void PrintChessboard()
+        public ushort Height
         {
-            for (int i = 0; i < _height; i++)
+            get { return _height; }
+            set
+            {
+                if ((value < 1) || (value > Console.LargestWindowHeight))
+                    throw new OverflowException($"Width should be in range from 1 to {Console.LargestWindowHeight}");
+                else
+                    this._height = value;
+            }
+        }
+
+        public void DisplayChessboard()
+        {
+            Console.Clear();
+            
+            for (int i = 0; i < Height; i++)
             {
                 for (int j = 0; j < _width; j++)
                 {

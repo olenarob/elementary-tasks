@@ -7,16 +7,22 @@ namespace Chessboard
     {
         static void Main(string[] args)
         {
-            ushort width;
-            ushort height;
-            const ushort minChessboardSize = 1;
-            Console.Clear();
+            const ushort minChessboardSize = 0;
+            
             if ((args.Length == 2) &&
-                Argument.TryParse<ushort>(args[0], minChessboardSize, (ushort)(Console.LargestWindowWidth), out width) &&
-                Argument.TryParse<ushort>(args[1], minChessboardSize, (ushort)Console.LargestWindowHeight, out height))
+                Argument.TryParse<ushort>(args[0], minChessboardSize, (ushort)Console.LargestWindowWidth, out ushort width) &&
+                Argument.TryParse<ushort>(args[1], minChessboardSize, ushort.MaxValue, out ushort height))
             {
-                var chessboard = new Chessboard(width, height);
-                chessboard.PrintChessboard();
+                try
+                {
+                    var chessboard = new Chessboard(width, height);
+                    chessboard.Height = height;
+                    chessboard.DisplayChessboard();
+                }
+                catch (OverflowException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             else
             {
