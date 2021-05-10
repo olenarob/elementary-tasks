@@ -2,7 +2,7 @@
 
 namespace NumberToString
 {
-    public class Numbers
+    public class NumberToString
     {
         enum NumbersName
         {
@@ -14,9 +14,22 @@ namespace NumberToString
         }
     
         private int _number;
-        public Numbers (int value)
+
+        public int Number
         {
-            _number = value;            
+            get { return _number; }
+            set
+            {
+                if (value < 1)
+                    throw new OverflowException
+                        ($"The number can not be less 1. Please use positive integer more than zero.");
+                else
+                    this._number = value;
+            }
+        }
+        public NumberToString (int number)
+        {
+            Number = number;            
         }
         
         static string ToName (int number)
@@ -37,7 +50,7 @@ namespace NumberToString
             
                 if (tripleDigitNumber != 0)
                 {
-                    text += TripleDigitNumberToText(tripleDigitNumber);
+                    text += TripleDigitNumberToString(tripleDigitNumber);
                     
                     if (divisor > 1)
                     {
@@ -52,12 +65,12 @@ namespace NumberToString
 
             return text.ToLower();
         }
-        private static string TripleDigitNumberToText(int tripleNumber)
+        private static string TripleDigitNumberToString(int tripleDigitNumber)
         {
             string text = string.Empty;
             
-            int hundreds = tripleNumber / 100;
-            int remainder = tripleNumber % 100;
+            int hundreds = tripleDigitNumber / 100;
+            int remainder = tripleDigitNumber % 100;
             
             if (hundreds != 0)
             {

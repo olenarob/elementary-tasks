@@ -7,16 +7,23 @@ namespace NumberToString
     {
         static void Main(string[] args)
         {
-            int value;
-            
-            if ((args.Length > 0) &&
-                Argument.TryParseInt(args[0], 1, int.MaxValue, out value))
+            try
             {
-                Console.Write(value + " - "+ new Numbers(value));
+                //if (Argument.TryParse<int>(args[0], 1, int.MaxValue, out int number))
+                int number = int.Parse(args[0]);
+                    Console.Write(number + " - "+ new NumberToString(number));
             }
-            else
+            catch (IndexOutOfRangeException)
             {
                 Console.WriteLine("Usage: NumberToString.exe [number]");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (OverflowException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

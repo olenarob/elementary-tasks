@@ -4,43 +4,54 @@ namespace Chessboard
 {
     class Chessboard
     {
+        const ushort minChessboardSide = 1;
+        
         private ushort _height;
         private ushort _width;
-
-        public Chessboard(ushort width, ushort height)
+        
+        public ushort Width
         {
-            this._width = width;
-           // this._height = height;
+            get { return _width; }
+            set
+            {
+                if ((value < minChessboardSide) || (value > Console.LargestWindowWidth))
+                    throw new OverflowException
+                        ($"The width of the chessboard should range from {minChessboardSide} to {Console.LargestWindowWidth}.");
+                else
+                    this._width = value;
+            }
         }
-
+        
         public ushort Height
         {
             get { return _height; }
             set
             {
-                if ((value < 1) || (value > Console.LargestWindowHeight))
-                    throw new OverflowException($"Width should be in range from 1 to {Console.LargestWindowHeight}");
+                if ((value < minChessboardSide) || (value > Console.LargestWindowHeight))
+                    throw new OverflowException
+                        ($"The height of the chessboard should range from {minChessboardSide} to {Console.LargestWindowHeight}.");
                 else
                     this._height = value;
             }
         }
-
+        
+        public Chessboard(ushort width, ushort height)
+        {
+            Width = width;
+            Height = height;
+        }
         public void DisplayChessboard()
         {
             Console.Clear();
             
-            for (int i = 0; i < Height; i++)
+            for (ushort i = 0; i < Height; i++)
             {
-                for (int j = 0; j < _width; j++)
+                for (ushort j = 0; j < Width; j++)
                 {
                     if ((i + j) % 2 == 0)
-                    {
                         Console.Write("*");
-                    }
                     else
-                    {
                         Console.Write(" ");
-                    }
                 }
                 Console.WriteLine();
             }
