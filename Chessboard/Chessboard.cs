@@ -33,23 +33,17 @@ namespace Chessboard
             {
                 for (int j = 0; j < _width; j++)
                 {
-                    if (i % 2 == 0)
+                    if ((i + j) % 2 == 0)
                     {
-                        if (j % 2 == 0)
-                        {
-                            Console.Write("*");
-                        }
-                        else Console.Write(" ");
+                        Console.Write("*");
                     }
-                    else if (j % 2 == 0)
+                    else
                     {
                         Console.Write(" ");
                     }
-                    else Console.Write("*");
                 }
                 Console.WriteLine();
             }
         }
-
     }
 }
