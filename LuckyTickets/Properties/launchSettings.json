@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LuckyTickets": {
+      "commandName": "Project",
+      "commandLineArgs": "000000 999999"
+    }
+  }
+}
