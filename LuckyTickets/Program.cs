@@ -2,16 +2,37 @@
 
 namespace LuckyTickets
 {
+    public delegate bool IsLuckyTicket(Ticket t);
+    
     class Program
     {
         static void Main(string[] args)
         {
             var start = GC.GetTotalAllocatedBytes(true);
-            Ticket.IsSimple(args[0],args[1]);
+
+            int countSimple = 0;
+            int countComplex = 0;
+
+            int min = Convert.ToInt32(args[0]);
+            int max = Convert.ToInt32(args[1]);
+
+            var ticket = new Ticket();
+            for (int j = min; j <= max; j++)
+            {
+                ticket.TicketNumber = Ticket.Format(j);
+                if (Ticket.IsLuckySimple(ticket))
+                    countSimple++;
+                if (Ticket.IsLuckyComplex(ticket))
+                    countComplex++;
+            }
+
+            Console.WriteLine(countSimple);
+            Console.WriteLine(countComplex);
+
             var end = GC.GetTotalAllocatedBytes(true);
             Console.WriteLine("Allocated bytes: " + (end - start).ToString());
         }
-    }
+   }
     public class Ticket
     {
         static string _format = new string('0', 6);
@@ -19,10 +40,7 @@ namespace LuckyTickets
 
         public string TicketNumber
         {
-            get
-            {
-                return ticketNumber;
-            }
+            get { return ticketNumber; }
             set
             {
                 //Char.IsDigit(ticketNumber[0]);
@@ -30,68 +48,47 @@ namespace LuckyTickets
             }
         }
 
-        static uint zeroCode = Convert.ToUInt32('0');
+       // static int zeroCode = '0';
 
-        static uint CharToInt(char ch)
+        static int CharToInt(char c)
         {
-            return Convert.ToUInt32(ch) - zeroCode;
+            return c - '0';
         }
         
-        public bool LuckyTicketSimple()
+        public static bool IsLuckySimple(Ticket ticket)
         {
-            uint sum1 = 0;
+            int sum1 = 0;
             for (int i=0; i < 3; i++)
             {
-                sum1 += CharToInt(TicketNumber[i]);
+                sum1 += CharToInt(ticket.TicketNumber[i]);
             }
             
-            uint sum2 = 0;
+            int sum2 = 0;
             for (int i = 3; i < 6; i++)
             {
-                sum2 += CharToInt(TicketNumber[i]);
+                sum2 += CharToInt(ticket.TicketNumber[i]);
             }
 
             return sum1 == sum2;
         }
 
-        public bool LuckyTicketComplex()
+        public static bool IsLuckyComplex(Ticket ticket)
         {
-            uint sum1 = 0;
-            uint sum2 = 0;
+            int sum1 = 0;
+            int sum2 = 0;
             for (int i = 0; i < 6; i++)
             {
                 if (i % 2 == 0)
-                    sum1 += CharToInt(TicketNumber[i]);
+                    sum1 += CharToInt(ticket.TicketNumber[i]);
                 else
-                    sum2 += CharToInt(TicketNumber[i]);
+                    sum2 += CharToInt(ticket.TicketNumber[i]);
             }
             return sum1 == sum2;
         }
-
-        public static void IsSimple(string minTicketNumber, string maxTicketNumber)
+        
+        public static string Format(int value)
         {
-            uint min = Convert.ToUInt32(minTicketNumber);
-            uint max = Convert.ToUInt32(maxTicketNumber);
-            uint count1 = 0;
-            uint count2 = 0;
-            var ticket = new Ticket();
-
-            for (uint j = min; j <= max; j++)
-            {
-                ticket.TicketNumber = j.ToString(_format);
-                
-                //Console.WriteLine(ticket.TicketNumber);
-                if (ticket.LuckyTicketSimple())
-                {
-                    count1++;
-                }
-
-                if (ticket.LuckyTicketComplex())
-                {
-                    count2++;
-                }
-            }
-            Console.WriteLine(count1 + " " + count2);
+            return value.ToString(_format);
         }
     }
 }

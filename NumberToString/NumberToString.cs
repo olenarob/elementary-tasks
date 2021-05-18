@@ -41,12 +41,11 @@ namespace NumberToString
         {
             string text = string.Empty;
 
-            int value = _number;
             int divisor = 1_000_000_000;
             
             do
             {
-                int tripleDigitNumber = value / divisor;
+                int tripleDigitNumber = (_number / divisor) % 1000;
             
                 if (tripleDigitNumber != 0)
                 {
@@ -56,7 +55,6 @@ namespace NumberToString
                     {
                         text += " " + ToName(divisor) + "\n";
                     }
-                    value -= tripleDigitNumber * divisor; //remainder
                 }
                 
                 divisor /= 1000;
@@ -86,8 +84,7 @@ namespace NumberToString
                 else
                 {
                     int tens = remainder / 10 * 10;
-                    remainder %= 10;
-                    text += ToName(tens) + " " + ToName(remainder);
+                    text += ToName(tens) + " " + ToName(tripleDigitNumber % 10);
                 }
             }
             return text;
