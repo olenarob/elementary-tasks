@@ -32,6 +32,7 @@ namespace FileParser
                             {
                                 break;
                             }
+
                             if (tmp == s[i])
                             {
                                 s1 += tmp;
@@ -41,10 +42,12 @@ namespace FileParser
                                 break;
                             }    
                         }
+
                         if (s1 == s)
                         {
                             count++;
                         }
+
                         fs.Seek(-(i-1), SeekOrigin.Current);
                     }
                 }

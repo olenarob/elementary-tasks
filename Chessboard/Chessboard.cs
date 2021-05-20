@@ -6,32 +6,32 @@ namespace Chessboard
     {
         const ushort minChessboardSide = 1;
         
-        private ushort _height;
-        private ushort _width;
+        private ushort height;
+        private ushort width;
         
         public ushort Width
         {
-            get { return _width; }
+            get { return width; }
             set
             {
                 if ((value < minChessboardSide) || (value > Console.LargestWindowWidth))
                     throw new OverflowException
                         ($"The width of the chessboard should range from {minChessboardSide} to {Console.LargestWindowWidth}.");
                 else
-                    this._width = value;
+                    this.width = value;
             }
         }
         
         public ushort Height
         {
-            get { return _height; }
+            get { return height; }
             set
             {
                 if ((value < minChessboardSide) || (value > Console.LargestWindowHeight))
                     throw new OverflowException
                         ($"The height of the chessboard should range from {minChessboardSide} to {Console.LargestWindowHeight}.");
                 else
-                    this._height = value;
+                    this.height = value;
             }
         }
         

@@ -20,7 +20,7 @@ namespace Chessboard
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine("Usage: Chessboard.exe [width] [height]");
+                Console.WriteLine("Usage: Chessboard [width] [height]");
             }
             catch (FormatException ex)
             {
