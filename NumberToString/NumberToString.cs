@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace NumberToString
 {
@@ -29,6 +30,7 @@ namespace NumberToString
                     this.number = value;
             }
         }
+        
         public NumberToString (int num)
         {
             Number = num;            
@@ -41,7 +43,7 @@ namespace NumberToString
         
         public override string ToString()
         {
-            string text = string.Empty;
+            var sb = new StringBuilder();
 
             int divisor = 1_000_000_000;
             
@@ -51,11 +53,11 @@ namespace NumberToString
             
                 if (tripleDigitNumber != 0)
                 {
-                    text += TripleDigitNumberToString(tripleDigitNumber);
+                    TripleDigitNumberToString(tripleDigitNumber, sb);
                     
                     if (divisor > 1)
                     {
-                        text += $" { ToName(divisor)}\n";
+                        sb.Append(' ').AppendLine(ToName(divisor));
                     }
                 }
                 
@@ -63,33 +65,33 @@ namespace NumberToString
             }
             while (divisor != 0);
 
-            return text.ToLower();
+            return sb.ToString().TrimStart().ToLower();
         }
-        private static string TripleDigitNumberToString(int tripleDigitNumber)
+        
+        private static void TripleDigitNumberToString(int tripleDigitNumber, StringBuilder sb)
         {
-            string text = string.Empty;
-            
             int hundreds = tripleDigitNumber / 100;
             int remainder = tripleDigitNumber % 100;
             
             if (hundreds != 0)
             {
-                text += $"{ToName(hundreds)} {ToName(100)} ";
+                sb.Append(' ').Append(ToName(hundreds))
+                  .Append(' ').Append(ToName(100));
             }
             
             if (remainder != 0)
             {
                 if (Enum.IsDefined(typeof(NumbersName), remainder))
                 {
-                    text += ToName(remainder);
+                    sb.Append(' ').Append(ToName(remainder));
                 }
                 else
                 {
                     int tens = remainder / 10 * 10;
-                    text += $"{ToName(tens)} {ToName(tripleDigitNumber % 10)}";
+                    sb.Append(' ').Append(ToName(tens))
+                      .Append(' ').Append(ToName(tripleDigitNumber % 10));
                 }
             }
-            return text;
         }
     }
 }
