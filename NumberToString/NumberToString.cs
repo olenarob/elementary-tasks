@@ -13,28 +13,30 @@ namespace NumberToString
             Thousand = 1_000, Million = 1_000_000, Billion = 1_000_000_000
         }
     
-        private int _number;
+        private int number;
 
         public int Number
         {
-            get { return _number; }
+            get { return number; }
             set
             {
                 if (value < 1)
+                {
                     throw new OverflowException
                         ($"The number can not be less 1. Please use positive integer more than zero.");
-                else
-                    this._number = value;
+                }
+                else    
+                    this.number = value;
             }
         }
-        public NumberToString (int number)
+        public NumberToString (int num)
         {
-            Number = number;            
+            Number = num;            
         }
         
-        static string ToName (int number)
+        static string ToName (int num)
         {
-            return Enum.GetName((NumbersName)number);
+            return Enum.GetName((NumbersName)num);
         }
         
         public override string ToString()
@@ -45,7 +47,7 @@ namespace NumberToString
             
             do
             {
-                int tripleDigitNumber = (_number / divisor) % 1000;
+                int tripleDigitNumber = number / divisor % 1000;
             
                 if (tripleDigitNumber != 0)
                 {
@@ -53,7 +55,7 @@ namespace NumberToString
                     
                     if (divisor > 1)
                     {
-                        text += " " + ToName(divisor) + "\n";
+                        text += $" { ToName(divisor)}\n";
                     }
                 }
                 
@@ -72,7 +74,7 @@ namespace NumberToString
             
             if (hundreds != 0)
             {
-                text += ToName(hundreds) + " " + ToName(100) + " ";
+                text += $"{ToName(hundreds)} {ToName(100)} ";
             }
             
             if (remainder != 0)
@@ -84,7 +86,7 @@ namespace NumberToString
                 else
                 {
                     int tens = remainder / 10 * 10;
-                    text += ToName(tens) + " " + ToName(tripleDigitNumber % 10);
+                    text += $"{ToName(tens)} {ToName(tripleDigitNumber % 10)}";
                 }
             }
             return text;

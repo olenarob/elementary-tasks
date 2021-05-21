@@ -13,7 +13,9 @@ namespace Sequence
         {
             uint n = length;
             uint firstIndex = 0;
+            
             uint tmp = GetNextElement();
+            
             for (uint i = 0; (n == 0) ? (tmp <= upperRange) : (i < firstIndex + length); i++)
             {
                 if (tmp < lowerRange)
@@ -21,9 +23,13 @@ namespace Sequence
                     firstIndex++;
                 }
                 else
+                {
                     yield return tmp;
+                }
+                
                 tmp = GetNextElement();
             }
+            
             Reset();
         }
         
@@ -39,41 +45,43 @@ namespace Sequence
     
     public class NaturalNumbers : Sequence
     {
-        private uint _a = 0;
+        private uint a = 0;
         protected override uint GetNextElement()
         {
-            return _a++;
+            return a++;
         }
         
         protected override void Reset()
         {
-            _a = 0;
+            a = 0;
         }
     }
 
     public class Fibonacci : Sequence
     {
-        private uint _a = 0;
-        private uint _b = 0;
+        private uint a = 0;
+        private uint b = 0;
         protected override uint GetNextElement()
         {
-            uint c = _a + _b;
+            uint c = a + b;
+            
             if (c == 0)
             {
-                _a = 1;
+                a = 1;
             }
             else
             {
-                _a = _b;
-                _b = c;
+                a = b;
+                b = c;
             }
+            
             return c;
         }
         
         protected override void Reset()
         {
-            _a = 0;
-            _b = 0;
+            a = 0;
+            b = 0;
         }
     }
 }
