@@ -4,6 +4,19 @@ namespace ArgumentsProcessor
 {
     public class Argument
     {
+        public static T GetValueFromUser<T>(string nameOfValue, T min, T max)
+            where T : struct, IComparable<T>, IConvertible
+        {
+            T value;
+            do
+            {
+                Console.Write($"Please enter {nameOfValue}: ");
+            }
+            while (!TryParse(Console.ReadLine(), min, max, out value));
+            
+            return value;
+        }
+
         public static bool TryParse<T>(string s, T min, T max, out T value)
             where T : struct, IComparable<T>, IConvertible
         {

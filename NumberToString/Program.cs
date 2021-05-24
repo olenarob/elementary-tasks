@@ -11,7 +11,7 @@ namespace NumberToString
             {
                 //if (Argument.TryParse<int>(args[0], 1, int.MaxValue, out int number))
                 int number = int.Parse(args[0]);
-                    Console.Write($"{number} - {new NumberToString(number)}");
+                Console.Write($"{number} - {new NumberToString(number)}");
             }
             catch (IndexOutOfRangeException)
             {

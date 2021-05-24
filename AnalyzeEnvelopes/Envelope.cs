@@ -2,35 +2,42 @@
 {
     public class Envelope
     {
-        private double _shortSide;
-        private double _longSide;
+        private readonly double shortSide;
+        private readonly double longSide;
 
-        public Envelope(double a, double b)
+        public Envelope(double side1, double side2)
         {
-            if (a < b)
+            if (side1 < side2)
             {
-                _shortSide = a;
-                _longSide = b;
+                shortSide = side1;
+                longSide = side2;
             }
             else
             {
-                _longSide = a;
-                _shortSide = b;
+                shortSide = side2;
+                longSide = side1;
             }
         }
 
-        public bool CanBeInsertedInto(Envelope that, out int n1, out int n2)
+        bool IsInsertedInto(Envelope that)
         {
-            if ((this._shortSide < that._shortSide) && (this._longSide < that._longSide))
+            return (this.shortSide < that.shortSide) && (this.longSide < that.longSide);
+        }
+
+        public string CheckInsertion(Envelope that)
+        {
+            string result = "None of the envelopes cannot be inserted into the other.";
+            
+            if (this.IsInsertedInto(that))
             {
-                n1 = 1;
-                n2 = 2;
-                return true;
+                result = $"Envelope with sides ({this.shortSide}, {this.longSide}) can be inserted into envelope with sides ({that.shortSide}, {that.longSide}).";
             }
-            else
-            n1 = 0;
-            n2 = 0;
-            return false;
+            else if (that.IsInsertedInto(this))
+            {
+                result = $"Envelope with sides ({this.shortSide}, {this.longSide}) can be inserted into envelope with sides ({this.shortSide}, {this.longSide})."; 
+            }
+            
+            return result;
         }
     }
 }
