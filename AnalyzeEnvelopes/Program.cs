@@ -7,31 +7,30 @@ namespace AnalyzeEnvelopes
     {
         static void Main(string[] args)
         {
-            double a;
-            double b;
-            double c;
-            double d;
-
             string userAnswer;
-
             do
             {
-                a = Argument.GetValueFromUser<double>("first side of envelope 1", Double.Epsilon, Double.MaxValue);
-                b = Argument.GetValueFromUser<double>("second side of envelope 1", Double.Epsilon, Double.MaxValue);
-                var envelope1 = new Envelope(a, b);
-
-                c = Argument.GetValueFromUser<double>("first side of envelope 2", Double.Epsilon, Double.MaxValue);
-                d = Argument.GetValueFromUser<double>("second side of envelope 2", Double.Epsilon, Double.MaxValue);
-                var envelope2 = new Envelope(c, d);
-                
+                Envelope envelope1 = GetEnvelopeFromUserInput(1);
+                Envelope envelope2 = GetEnvelopeFromUserInput(2);
                 Console.WriteLine(envelope1.CheckInsertion(envelope2));
-                                
+
                 Console.Write("Go again? Y/N: ");
                 userAnswer = Console.ReadLine();
             }
-            while (userAnswer.Equals("y", StringComparison.CurrentCultureIgnoreCase)
-                   || userAnswer.Equals("yes", StringComparison.CurrentCultureIgnoreCase));
+            while (IsRepeat(userAnswer));
         }
-        
+
+        private static bool IsRepeat(string userAnswer)
+        {
+            return userAnswer.Equals("y", StringComparison.CurrentCultureIgnoreCase)
+                || userAnswer.Equals("yes", StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        private static Envelope GetEnvelopeFromUserInput(int envelopeIndex)
+        {
+            return new Envelope(
+                Argument.GetValueFromUser($"first side of envelope {envelopeIndex}", double.Epsilon, double.MaxValue),
+                Argument.GetValueFromUser($"second side of envelope {envelopeIndex}", double.Epsilon, double.MaxValue));
+        }
     }
 }
