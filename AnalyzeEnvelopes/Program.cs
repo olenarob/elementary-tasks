@@ -1,7 +1,7 @@
 ﻿using ArgumentsProcessor;
 using System;
 
-namespace AnalyzeEnvelopes
+namespace AnalysisOfEnvelopes
 {
     class Program
     {
@@ -28,9 +28,10 @@ namespace AnalyzeEnvelopes
 
         private static Envelope GetEnvelopeFromUserInput(int envelopeIndex)
         {
-            return new Envelope(
-                Argument.GetValueFromUser($"first side of envelope {envelopeIndex}", double.Epsilon, double.MaxValue),
-                Argument.GetValueFromUser($"second side of envelope {envelopeIndex}", double.Epsilon, double.MaxValue));
+            double side1 = Argument.GetValueFromUser($" first side of envelope {envelopeIndex}", double.Epsilon, double.MaxValue);
+            double side2 = Argument.GetValueFromUser($"second side of envelope {envelopeIndex}", double.Epsilon, double.MaxValue);
+            
+            return new Envelope(side1, side2);
         }
     }
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.809.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalyzeEnvelopes", "AnalyzeEnvelopes\AnalyzeEnvelopes.csproj", "{93858E3F-CDD1-4B64-9939-C9445C6932B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalysisOfEnvelopes", "AnalyzeEnvelopes\AnalysisOfEnvelopes.csproj", "{93858E3F-CDD1-4B64-9939-C9445C6932B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chessboard", "Chessboard\Chessboard.csproj", "{67250631-058C-4074-8B2C-D7F20DB2475D}"
 EndProject
@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NumericalSequence", "Numeri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sequence", "Sequence\Sequence.csproj", "{42EA9E41-F655-4B5B-87AC-DDC30F4B72AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuckyTickets", "LuckyTickets\LuckyTickets.csproj", "{3834820B-DD0D-4490-9631-9F33EE96E3FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuckyTickets", "LuckyTickets\LuckyTickets.csproj", "{3834820B-DD0D-4490-9631-9F33EE96E3FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

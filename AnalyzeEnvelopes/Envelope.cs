@@ -1,4 +1,4 @@
-﻿namespace AnalyzeEnvelopes
+﻿namespace AnalysisOfEnvelopes
 {
     public class Envelope
     {
