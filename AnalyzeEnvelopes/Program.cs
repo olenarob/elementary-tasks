@@ -14,13 +14,13 @@ namespace AnalysisOfEnvelopes
                 Envelope envelope2 = GetEnvelopeFromUserInput(2);
                 Console.WriteLine(envelope1.CheckInsertion(envelope2));
 
-                Console.Write("Go again? Y/N: ");
+                Console.Write("Try again? ");
                 userAnswer = Console.ReadLine();
             }
-            while (IsRepeat(userAnswer));
+            while (IfRepeat(userAnswer));
         }
 
-        private static bool IsRepeat(string userAnswer)
+        private static bool IfRepeat(string userAnswer)
         {
             return userAnswer.Equals("y", StringComparison.CurrentCultureIgnoreCase)
                 || userAnswer.Equals("yes", StringComparison.CurrentCultureIgnoreCase);
