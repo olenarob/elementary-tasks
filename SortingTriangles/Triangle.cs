@@ -4,24 +4,16 @@ namespace SortingTriangles
 {
     public struct Triangle
     {
-        string name;
-        double a;
-        double b;
-        double c;
-        double area;
-
         public Triangle(string name, double a, double b, double c)
         {
-            this.name = name;
-
-            this.a = a;
-            this.b = b;
-            this.c = c;
-            
-            area = CalculateArea(a,b,c);
+            Name = name;
+            Area = CalculateArea(a,b,c);
         }
 
-        public double Area { get => area; set => area = value; }
+        public string Name { get; }
+        public double Area { get; }
+
+        public override string ToString() => $"[Triangle {Name}]: {Area:N} cm";
 
         public static bool IsTriangle(double a, double b, double c)
         {
@@ -32,12 +24,12 @@ namespace SortingTriangles
         {
             double s = (a + b + c) / 2; // semi-perimeter
 
-            return Math.Sqrt(s*(s-a)*(s-b)*(s-c));
+            return Math.Sqrt(s*(s-a)*(s-b)*(s-c)); // Heron's formula
         }
-
-        public override string ToString()
+        
+        public static int CompareAreaDesc(Triangle triangle1, Triangle triangle2)
         {
-            return $"[Triangle {name}]: {Area} cm";
+            return triangle2.Area.CompareTo(triangle1.Area);
         }
     }
 }
