@@ -1,5 +1,4 @@
-﻿using ArgumentsProcessor;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace SortingTriangles
@@ -19,6 +18,7 @@ namespace SortingTriangles
                 {
                     triangles.Add(triangle);
                 }
+                
                 Console.Write("Try again? ");
                 userAnswer = Console.ReadLine();
             }
@@ -39,24 +39,59 @@ namespace SortingTriangles
         {
             triangle = default;
             bool success = false;
-            
-            Console.Write("Please enter name of triangle: ");
-            string name = Console.ReadLine();
-            
-            double a = Argument.GetValueFromUser($" first side of triangle", double.Epsilon, double.MaxValue);
-            double b = Argument.GetValueFromUser($"second side of triangle", double.Epsilon, double.MaxValue);
-            double c = Argument.GetValueFromUser($" third side of triangle", double.Epsilon, double.MaxValue);
-            
-            if (Triangle.IsTriangle(a, b, c))
+
+            Console.WriteLine("Please enter the name and sides of the triangle through the comma:");
+            string[] userInput = Console.ReadLine().Split(',');
+
+            try
             {
-                triangle = new Triangle(name, a, b, c);
-                success = true;
+                string name = userInput[0].Trim();
+                if (name.Equals(""))
+                {
+                    throw new FormatException("Name of the triangle cannot be empty!");
+                }
+                
+                double[] sides = new double[3];
+
+                for (int i = 0; i < 3; i++)
+                {
+                    sides[i] = double.Parse(userInput[i + 1]);
+                    
+                    if (double.IsNegative(sides[i]))
+                    {
+                        throw new OverflowException
+                            ("Length of the side of the triangle cannot be less zero!");
+                    }
+                }
+
+                if (Triangle.IsTriangle(sides[0], sides[1], sides[2]))
+                {
+                    triangle = new Triangle(name, sides[0], sides[1], sides[2]);
+                    success = true;
+                }
+                else
+                {
+                    throw new Exception
+                        ($"Triangle with sides {sides[0]}, {sides[1]}, {sides[2]} doesn't exist!");
+                }
             }
-            else
+            catch (IndexOutOfRangeException)
             {
-                Console.WriteLine($"Triangle with sides {a}, {b}, {c} doesn't exist!");
+                Console.WriteLine("Usage: <name>,<length of side>,<length of side>,<length of side>");
             }
-            
+            catch (FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (OverflowException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             return success;
         }
 

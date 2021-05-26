@@ -49,9 +49,13 @@ namespace Chessboard
                 for (ushort j = 0; j < Width; j++)
                 {
                     if ((i + j) % 2 == 0)
+                    {
                         Console.Write("*");
+                    }
                     else
+                    {
                         Console.Write(" ");
+                    }
                 }
                 Console.WriteLine();
             }

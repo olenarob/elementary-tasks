@@ -1,5 +1,4 @@
-﻿using ArgumentsProcessor;
-using System;
+﻿using System;
 
 namespace Chessboard
 {
@@ -11,9 +10,6 @@ namespace Chessboard
             {
                 ushort width = ushort.Parse(args[0]);
                 ushort height = ushort.Parse(args[1]);
-
-                // Argument.TryParse<ushort>(args[0], ushort.MinValue, ushort.MaxValue, out ushort width);
-                // Argument.TryParse<ushort>(args[1], ushort.MinValue, ushort.MaxValue, out ushort height);
 
                 var chessboard = new Chessboard(width, height);
                 chessboard.DisplayChessboard();
