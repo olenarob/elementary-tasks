@@ -1,5 +1,4 @@
 ﻿using ArgumentsProcessor;
-using Sequence;
 using System;
 
 namespace NumericalSequence

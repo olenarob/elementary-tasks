@@ -1,44 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Sequence
+namespace NumericalSequence
 {
     public abstract class Sequence
     {
-        public abstract int CommonElement(int n);
+        protected abstract uint GetNextElement();
 
-        public void DisplaySequenceOfLength(int length, int lowerRange = 0)
-        {
-            int i = 0;
-            while (CommonElement(i) < lowerRange)
-            {
-                i++;
-            }
-            int firstIndex = i;
+        protected abstract void Reset();
 
-            for (i = firstIndex; i < firstIndex + length; i++)
-            {
-                Console.Write($"{CommonElement(i)} ");
-            }
-            Console.WriteLine();
-        }
-        public void DisplaySequenceInRange(int lowerRange, int upperRange)
+        public IEnumerable<uint> GetSequence(uint length = 0, uint lowerRange = 0, uint upperRange = uint.MaxValue)
         {
-            int i = 0;
-            while (CommonElement(i) <= upperRange)
+            uint n = length;
+            uint firstIndex = 0;
+
+            uint tmp = GetNextElement();
+
+            for (uint i = 0; (n == 0) ? (tmp <= upperRange) : (i < firstIndex + length); i++)
             {
-                if (CommonElement(i) >= lowerRange)
+                if (tmp < lowerRange)
                 {
-                    Console.Write($"{CommonElement(i)} ");
+                    firstIndex++;
                 }
-                i++;
+                else
+                {
+                    yield return tmp;
+                }
+
+                tmp = GetNextElement();
+            }
+
+            Reset();
+        }
+
+        public void DisplaySequence(uint length = 0, uint lowerRange = 0, uint upperRange = uint.MaxValue)
+        {
+            foreach (int number in GetSequence(length, lowerRange, upperRange))
+            {
+                Console.Write($"{number} ");
             }
             Console.WriteLine();
         }
     }
-    
 }
-

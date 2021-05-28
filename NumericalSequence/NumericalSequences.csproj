@@ -6,12 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Sequence.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ArgumentsProcessor\ArgumentsProcessor.csproj" />
-    <ProjectReference Include="..\Sequence\Sequence.csproj" />
   </ItemGroup>
 
 </Project>
