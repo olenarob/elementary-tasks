@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Chessboard
 {
     class Chessboard
     {
-        const ushort minChessboardSide = 1;
+        public const ushort minSide = 1;
         
         private ushort height;
         private ushort width;
@@ -14,9 +15,9 @@ namespace Chessboard
             get { return width; }
             set
             {
-                if ((value < minChessboardSide) || (value > Console.LargestWindowWidth))
+                if ((value < minSide) || (value > Console.WindowWidth))
                     throw new OverflowException
-                        ($"The width of the chessboard should range from {minChessboardSide} to {Console.LargestWindowWidth}.");
+                        ($"The width of the chessboard is out of range!");
                 else
                     this.width = value;
             }
@@ -27,9 +28,9 @@ namespace Chessboard
             get { return height; }
             set
             {
-                if ((value < minChessboardSide) || (value > Console.LargestWindowHeight))
+                if ((value < minSide) || (value > Console.WindowHeight))
                     throw new OverflowException
-                        ($"The height of the chessboard should range from {minChessboardSide} to {Console.LargestWindowHeight}.");
+                        ($"The height of the chessboard is out of range!");
                 else
                     this.height = value;
             }
@@ -37,27 +38,57 @@ namespace Chessboard
         
         public Chessboard(ushort width, ushort height)
         {
-            Width = width;
-            Height = height;
-        }
-        public void DisplayChessboard()
-        {
-            Console.Clear();
+            try
+            {
+                Width = width;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    Height = height;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
             
+        }
+        public IEnumerable<char> GetChessboard()
+        {
             for (ushort i = 0; i < Height; i++)
             {
                 for (ushort j = 0; j < Width; j++)
                 {
                     if ((i + j) % 2 == 0)
                     {
-                        Console.Write("*");
+                        yield return '*';
                     }
                     else
                     {
-                        Console.Write(" ");
+                        yield return ' ';
                     }
                 }
-                Console.WriteLine();
+
+                foreach (var ch in Environment.NewLine)
+                {
+                    yield return ch;
+                }
+            }
+        }
+
+        public void DisplayChessboard()
+        {
+            foreach (var item in GetChessboard())
+            {
+                Console.Write(item);
             }
         }
     }
