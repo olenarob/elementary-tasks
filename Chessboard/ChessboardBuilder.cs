@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Chessboard
 {
-    class Chessboard
+    class ChessboardBuilder
     {
         public const ushort minSide = 1;
         
@@ -36,36 +36,36 @@ namespace Chessboard
             }
         }
         
-        public Chessboard(ushort width, ushort height)
+        public ChessboardBuilder(ushort width, ushort height)
         {
+            var exceptions = new List<Exception>(2);
             try
             {
                 Width = width;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                throw;
+                exceptions.Add(ex);
             }
-            finally
-            {
-                try
-                {
-                    Height = height;
-                }
-                catch (Exception)
-                {
 
-                    throw;
-                }
+            try
+            {
+                Height = height;
+            }
+            catch (Exception ex)
+            {
+                exceptions.Add(ex);
             }
             
+            if (exceptions.Count > 0)
+                throw new AggregateException("", exceptions);
         }
+
         public IEnumerable<char> GetChessboard()
         {
-            for (ushort i = 0; i < Height; i++)
+            for (short i = 0; i < Height; i++)
             {
-                for (ushort j = 0; j < Width; j++)
+                for (short j = 0; j < Width; j++)
                 {
                     if ((i + j) % 2 == 0)
                     {
