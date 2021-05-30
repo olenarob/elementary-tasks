@@ -39,56 +39,6 @@ namespace FileParser
             Console.WriteLine("2.<path> <string to search> <string to replace>");
         }
 
-        private static void CountInFile(string sourceFileName, string lineToSearch)
-        {
-            int nextByte;
-            string s = lineToSearch;
-            int count = 0;
-
-            using (var fs = new FileStream(sourceFileName, FileMode.Open, FileAccess.Read))
-            {
-                fs.Seek(0, SeekOrigin.Begin);
-
-                while ((nextByte = fs.ReadByte()) > 0)
-                {
-                    char tmp = Convert.ToChar(nextByte);
-                    if (tmp == s[0])
-                    {
-                        int i;
-                        string s1 = "" + s[0];
-                        for (i = 1; i < s.Length; i++)
-                        {
-                            if ((nextByte = fs.ReadByte()) > 0)
-                            {
-                                tmp = Convert.ToChar(nextByte);
-                            }
-                            else
-                            {
-                                break;
-                            }
-
-                            if (tmp == s[i])
-                            {
-                                s1 += tmp;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-
-                        if (s1 == s)
-                        {
-                            count++;
-                        }
-
-                        fs.Seek(-(i - 1), SeekOrigin.Current);
-                    }
-                }
-            }
-            Console.WriteLine(@$"There are {count} strings ""{s}"" in {sourceFileName}.");
-        }
-
         private static void SearchInFile(string sourceFileName, string lineToSearch)
         {
             try
