@@ -2,7 +2,7 @@
   "profiles": {
     "FileParser": {
       "commandName": "Project",
-      "commandLineArgs": "text.txt Hello ",
+      "commandLineArgs": "text.txt By",
       "workingDirectory": "C:\\Users\\Alena\\source\\elementary-tasks\\FileParser"
     }
   }

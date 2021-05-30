@@ -7,29 +7,45 @@ namespace FileParser
     {
         static void Main(string[] args)
         {
-            switch (args.Length)
+            try
             {
-                case 2:
-                    SearchInFile(args);
-                    break;
-                case 3:
-                    ReplaceInFile(args);
-                    break;
-                default:
-                    Console.WriteLine("Usage:");
-                    Console.WriteLine("1.<path> <string to count>");
-                    Console.WriteLine("2.<path> <string to search> <string to replace");
-                    break;
-            } 
+                switch (args.Length)
+                {
+                    case 2:
+                        CountInFile(args[0], args[1]);
+                        SearchInFile(args[0], args[1]);
+                        break;
+                    case 3:
+                        ReplaceInFile(args[0], args[1], args[2]);
+                        Console.WriteLine($"FileParser has completed the processing of {args[0]}.");
+                        break;
+                    default:
+                        Help();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Help();
+            }
+            
         }
-                
-        private static void CountInFile(string[] args)
+
+        private static void Help()
+        {
+            Console.WriteLine("Usage:");
+            Console.WriteLine("1.<path> <string to count>");
+            Console.WriteLine("2.<path> <string to search> <string to replace>");
+        }
+
+        private static void CountInFile(string sourceFileName, string lineToSearch)
         {
             int nextByte;
-            string s = args[1];
+            string s = lineToSearch;
             int count = 0;
 
-            using (var fs = new FileStream(args[0], FileMode.Open, FileAccess.Read))
+            using (var fs = new FileStream(sourceFileName, FileMode.Open, FileAccess.Read))
             {
                 fs.Seek(0, SeekOrigin.Begin);
 
@@ -70,29 +86,22 @@ namespace FileParser
                     }
                 }
             }
-            Console.WriteLine(@$"There are {count} strings ""{s}"" in {args[0]}.");
+            Console.WriteLine(@$"There are {count} strings ""{s}"" in {sourceFileName}.");
         }
 
-        private static void SearchInFile(string[] args)
+        private static void SearchInFile(string sourceFileName, string lineToSearch)
         {
             try
             {
-                using (var reader = new StreamReader(args[0]))
+                using (var reader = new StreamReader(sourceFileName))
                 {
-                    // Redirect standard input from the console to the input file.
-                    Console.SetIn(reader);
-                    
                     int count = 0;
                     string line;
-                    
-                    while ((line = Console.ReadLine()) != null)
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        if (line.Contains(args[1]))
-                        {
-                            count++;
-                        }
+                        count += line.Split(lineToSearch).Length - 1;
                     }
-                    Console.WriteLine(@$"There are {count} strings ""{args[1]}"" in {args[0]}.");
+                    Console.WriteLine(@$"There are {count} strings ""{lineToSearch}"" in {sourceFileName}.");
                 }
             }
             catch (IOException e)
@@ -101,41 +110,26 @@ namespace FileParser
                 Console.WriteLine("Usage: <path> <string to count>");
             }
         }
-        private static void ReplaceInFile(string[] args)
+        private static void ReplaceInFile(string sourceFileName, string lineToSearch, string lineToReplace)
         {
-            try
+            
+            string tmpFileName = Path.Combine(Path.GetDirectoryName(sourceFileName), "tmp.txt");
+
+            using (var writer = new StreamWriter(tmpFileName))
             {
-                // Attempt to open output file.
-                using (var writer = new StreamWriter("tmp.txt"))
+                using (var reader = new StreamReader(sourceFileName))
                 {
-                    using (var reader = new StreamReader(args[0]))
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        // Redirect standard output from the console to the output file.
-                        Console.SetOut(writer);
-                        // Redirect standard input from the console to the input file.
-                        Console.SetIn(reader);
-                        string line;
-                        while ((line = Console.ReadLine()) != null)
-                        {
-                            string newLine = line.Replace(args[1], args[2]);
-                            Console.WriteLine(newLine);
-                        }
+                        string newLine = line.Replace(lineToSearch, lineToReplace);
+                        writer.WriteLine(newLine);
                     }
                 }
             }
-            catch (IOException e)
-            {
-                TextWriter errorWriter = Console.Error;
-                errorWriter.WriteLine(e.Message);
-                errorWriter.WriteLine("Usage: <path> <string to search> <string to replace");
-            }
 
-            // Recover the standard output stream so that a
-            // completion message can be displayed.
-            var standardOutput = new StreamWriter(Console.OpenStandardOutput());
-            standardOutput.AutoFlush = true;
-            Console.SetOut(standardOutput);
-            Console.WriteLine($"FileParser has completed the processing of {args[0]}.");
+            File.Copy(tmpFileName, sourceFileName, true);
+            File.Delete(tmpFileName);
         }
     }
 }
