@@ -39,6 +39,7 @@ namespace Chessboard
         public ChessboardBuilder(ushort width, ushort height)
         {
             var exceptions = new List<Exception>(2);
+            
             try
             {
                 Width = width;
@@ -56,9 +57,11 @@ namespace Chessboard
             {
                 exceptions.Add(ex);
             }
-            
+
             if (exceptions.Count > 0)
-                throw new AggregateException("", exceptions);
+            {
+                throw new AggregateException("", exceptions); ;
+            }
         }
 
         public IEnumerable<char> GetChessboard()
@@ -77,9 +80,9 @@ namespace Chessboard
                     }
                 }
 
-                foreach (var ch in Environment.NewLine)
+                foreach (var character in Environment.NewLine)
                 {
-                    yield return ch;
+                    yield return character;
                 }
             }
         }

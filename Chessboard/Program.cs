@@ -23,18 +23,23 @@ namespace Chessboard
                     }
                 }
 
-                
                 ushort width = ushort.Parse(args[0]);
                 ushort height = ushort.Parse(args[1]);
 
-                var chessboard = new Chessboard(width, height);
+                var chessboard = new ChessboardBuilder(width, height);
                 chessboard.GetChessboard();
                 chessboard.DisplayChessboard();
             }
-            catch (Exception ex)
+            catch (AggregateException ex)
             {
-                if (!(ex is IndexOutOfRangeException))
-                    Console.WriteLine(ex.Message);
+                foreach (var exception in ex.InnerExceptions)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+                View.Help();
+            }
+            catch (Exception)
+            {
                 View.Help();
             }
         }
