@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chessboard
+namespace ChessboardApp
 {
     class Program
     {
@@ -8,27 +8,31 @@ namespace Chessboard
         {
             try
             {
-                foreach (var item in args)
+                foreach (var arg in args)
                 {
-                    switch (item)
+                    switch (arg)
                     {
                         case "-help":
-                            View.Help();
+                            ChessboardView.Help();
                             break;
                         case "-task":
-                            View.Task();
+                            ChessboardView.Task();
                             break;
                         default:
                             break;
                     }
                 }
 
-                ushort width = ushort.Parse(args[0]);
-                ushort height = ushort.Parse(args[1]);
+                var width = ushort.Parse(args[0]);
+                var height = ushort.Parse(args[1]);
 
-                var chessboard = new ChessboardBuilder(width, height);
-                chessboard.GetChessboard();
-                chessboard.DisplayChessboard();
+                IChessboard chessboardModel = new Chessboard(width, height);
+                IChessboardView chessboardView = new ChessboardView();
+
+                var chessboardController = new ChessboardController(chessboardModel, chessboardView);
+                chessboardController.DisplayChessboardInfo();
+
+                Console.ReadLine();
             }
             catch (AggregateException ex)
             {
@@ -36,12 +40,13 @@ namespace Chessboard
                 {
                     Console.WriteLine(exception.Message);
                 }
-                View.Help();
+                ChessboardView.Help();
             }
             catch (Exception)
             {
-                View.Help();
+                ChessboardView.Help();
             }
+
         }
     }
 }

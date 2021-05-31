@@ -1,9 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Chessboard
+namespace ChessboardApp
 {
-    class ChessboardBuilder
+    interface IChessboard
+    {
+        ushort Width { get; set; }
+        ushort Height { get; set; }
+        IEnumerable<char> GetChessboard();
+    }
+
+    class Chessboard : IChessboard
     {
         public const ushort minSide = 1;
         
@@ -36,7 +43,7 @@ namespace Chessboard
             }
         }
         
-        public ChessboardBuilder(ushort width, ushort height)
+        public Chessboard(ushort width, ushort height)
         {
             var exceptions = new List<Exception>(2);
             
@@ -84,14 +91,6 @@ namespace Chessboard
                 {
                     yield return character;
                 }
-            }
-        }
-
-        public void DisplayChessboard()
-        {
-            foreach (var item in GetChessboard())
-            {
-                Console.Write(item);
             }
         }
     }
