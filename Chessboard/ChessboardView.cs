@@ -1,44 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ChessboardApp
 {
-    interface IChessboardView
+    public interface IMaxSizeProvider
     {
-        void DisplayChessboardView(IChessboard chessboard);
+        uint MaxWidth { get; }
+        uint MaxHeight { get; }
+    }
+
+    public interface IChessboardView : IMaxSizeProvider
+    {
+        void DisplayChessboard(IEnumerable<char> chessboardItems);
+        void DisplayChessboardHelp(IEnumerable<string> helpItems);
+        void DisplayChessboardTask(IEnumerable<string> taskItems);
     }
 
     class ChessboardView : IChessboardView
     {
-        public void DisplayChessboardView(IChessboard chessboard)
+        public uint MaxWidth => (uint)Console.WindowWidth;
+
+        public uint MaxHeight => (uint)Console.WindowHeight;
+
+        public void DisplayChessboard(IEnumerable<char> chessboardItems)
         {
-            Console.WriteLine("Chessboard");
-            Console.WriteLine("===============================");
-            foreach (var item in chessboard.GetChessboard())
+            Console.WriteLine();
+            foreach (var item in chessboardItems)
             {
                 Console.Write(item);
             }
+            Console.WriteLine();
         }
 
-        public static void Help()
+        public void DisplayChessboardHelp(IEnumerable<string> helpItems)
         {
-            Console.WriteLine();
-            Console.WriteLine("================ Help ================");
-            Console.WriteLine("Usage: Chessboard.exe <width> <height>");
-            Console.WriteLine($"Width should range from {Chessboard.minSide} to {Console.WindowWidth}.");
-            Console.WriteLine($"Height should range from {Chessboard.minSide} to {Console.WindowHeight}.");
+            foreach (var item in helpItems)
+            {
+                Console.WriteLine(item);
+            }
         }
-        public static void Task()
+        public void DisplayChessboardTask(IEnumerable<string> taskItems)
         {
-            Console.WriteLine();
-            Console.WriteLine($"============== Task 1 {typeof(Chessboard).Name} ===============");
-            Console.WriteLine("Output a chessboard with a set height and width, on the principle of:");
-            
-            IChessboard chessboardModel = new Chessboard(12, 4);
-            IChessboardView chessboardView = new ChessboardView();
-            var chessboardController = new ChessboardController(chessboardModel, chessboardView);
-            chessboardController.DisplayChessboardInfo();
-
-            Console.WriteLine("The program runs through a main class call with parameters.");
+            foreach (var item in taskItems)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ChessboardApp
+﻿namespace ChessboardApp
 {
     class ChessboardController
     {
@@ -15,7 +13,17 @@ namespace ChessboardApp
 
         public void DisplayChessboardInfo()
         {
-            chessboardView.DisplayChessboardView(this.chessboardModel);
+            chessboardView.DisplayChessboard(this.chessboardModel.GetChessboard());
+        }
+
+        public void DisplayChessboardHelp()
+        {
+            chessboardView.DisplayChessboardHelp(this.chessboardModel.GetChessboardHelp());
+        }
+
+        public void DisplayChessboardTask()
+        {
+            chessboardView.DisplayChessboardTask(this.chessboardModel.GetChessboardTask());
         }
     }
 }

@@ -8,12 +8,14 @@ namespace ChessboardApp
         ushort Width { get; set; }
         ushort Height { get; set; }
         IEnumerable<char> GetChessboard();
+        IEnumerable<string> GetChessboardHelp();
+        IEnumerable<string> GetChessboardTask();
     }
 
     class Chessboard : IChessboard
     {
-        public const ushort minSide = 1;
-        
+        private const ushort MinSide = 1;
+        private IMaxSizeProvider maxSizeProvider;
         private ushort height;
         private ushort width;
         
@@ -22,7 +24,7 @@ namespace ChessboardApp
             get { return width; }
             set
             {
-                if ((value < minSide) || (value > Console.WindowWidth))
+                if ((value < MinSide) || (value > maxSizeProvider.MaxWidth))
                     throw new OverflowException
                         ($"The width of the chessboard is out of range!");
                 else
@@ -35,16 +37,21 @@ namespace ChessboardApp
             get { return height; }
             set
             {
-                if ((value < minSide) || (value > Console.WindowHeight))
+                if ((value < MinSide) || (value > maxSizeProvider.MaxHeight))
                     throw new OverflowException
                         ($"The height of the chessboard is out of range!");
                 else
                     this.height = value;
             }
         }
-        
-        public Chessboard(ushort width, ushort height)
+
+        public Chessboard(IMaxSizeProvider maxSizeProvider) : this (12, 4, maxSizeProvider)
         {
+        }
+        public Chessboard(ushort width, ushort height, IMaxSizeProvider maxSizeProvider)
+        {
+            this.maxSizeProvider = maxSizeProvider;
+
             var exceptions = new List<Exception>(2);
             
             try
@@ -92,6 +99,27 @@ namespace ChessboardApp
                     yield return character;
                 }
             }
+        }
+
+        public IEnumerable<string> GetChessboardHelp()
+        {
+            yield return "";
+            yield return "================ Help ================";
+            yield return "Usage: Chessboard.exe <width> <height>";
+            yield return $"Width should range from {MinSide} to {maxSizeProvider.MaxWidth}.";
+            yield return $"Height should range from {MinSide} to {maxSizeProvider.MaxHeight}.";
+        }
+
+        public IEnumerable<string> GetChessboardTask()
+        {
+            yield return "";
+            yield return $"============== Task 1 {typeof(Chessboard).Name} ===============";
+            yield return "Output a chessboard with a set height and width, on the principle of:";
+            yield return "* * * * * * ";
+            yield return " * * * * * *";
+            yield return "* * * * * * ";
+            yield return " * * * * * *";
+            yield return "The program runs through a main class call with parameters.";
         }
     }
 }

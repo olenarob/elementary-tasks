@@ -6,6 +6,8 @@ namespace ChessboardApp
     {
         static void Main(string[] args)
         {
+            IChessboardView chessboardView = new ChessboardView();
+            var chessboardHelpController = new ChessboardController(new Chessboard(chessboardView), chessboardView);
             try
             {
                 foreach (var arg in args)
@@ -13,10 +15,10 @@ namespace ChessboardApp
                     switch (arg)
                     {
                         case "-help":
-                            ChessboardView.Help();
+                            chessboardHelpController.DisplayChessboardHelp();
                             break;
                         case "-task":
-                            ChessboardView.Task();
+                            chessboardHelpController.DisplayChessboardTask();
                             break;
                         default:
                             break;
@@ -25,10 +27,8 @@ namespace ChessboardApp
 
                 var width = ushort.Parse(args[0]);
                 var height = ushort.Parse(args[1]);
-
-                IChessboard chessboardModel = new Chessboard(width, height);
-                IChessboardView chessboardView = new ChessboardView();
-
+                IChessboard chessboardModel = new Chessboard(width, height, chessboardView);
+                
                 var chessboardController = new ChessboardController(chessboardModel, chessboardView);
                 chessboardController.DisplayChessboardInfo();
 
@@ -40,11 +40,11 @@ namespace ChessboardApp
                 {
                     Console.WriteLine(exception.Message);
                 }
-                ChessboardView.Help();
+                chessboardHelpController.DisplayChessboardHelp();
             }
             catch (Exception)
             {
-                ChessboardView.Help();
+                chessboardHelpController.DisplayChessboardHelp();
             }
 
         }
