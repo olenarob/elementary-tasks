@@ -1,6 +1,8 @@
-﻿namespace ChessboardApp
+﻿using System;
+
+namespace ChessboardApp
 {
-    class ChessboardController
+    public class ChessboardController
     {
         private IChessboard chessboardModel;
         private IChessboardView chessboardView;
@@ -11,19 +13,31 @@
             this.chessboardView = chessboardView;
         }
 
-        public void DisplayChessboardInfo()
+        public void DisplayChessboardInfo(string[] args)
         {
-            chessboardView.DisplayChessboard(this.chessboardModel.GetChessboard());
-        }
-
-        public void DisplayChessboardHelp()
-        {
-            chessboardView.DisplayChessboardHelp(this.chessboardModel.GetChessboardHelp());
-        }
-
-        public void DisplayChessboardTask()
-        {
-            chessboardView.DisplayChessboardTask(this.chessboardModel.GetChessboardTask());
+            try
+            {
+                if (args.Length < 2)
+                {
+                    throw new IndexOutOfRangeException("Two arguments are expected.");
+                }
+                chessboardModel.SetSides(width: ushort.Parse(args[0]),
+                                        height: ushort.Parse(args[1]));
+                chessboardView.DisplayChessboard(this.chessboardModel.GetChessboard());
+            }
+            catch (AggregateException ex)
+            {
+                foreach (var exception in ex.InnerExceptions)
+                {
+                    chessboardView.DisplayMessage(exception.Message);
+                }
+                chessboardView.DisplayChessboardHelp();
+            }
+            catch
+            {
+                chessboardView.DisplayMessage("Invalid argument(s).");
+                chessboardView.DisplayChessboardHelp();
+            }
         }
     }
 }

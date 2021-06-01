@@ -3,48 +3,69 @@ using System.Collections.Generic;
 
 namespace ChessboardApp
 {
-    public interface IMaxSizeProvider
+    public class ChessboardView : IChessboardView
     {
-        uint MaxWidth { get; }
-        uint MaxHeight { get; }
-    }
-
-    public interface IChessboardView : IMaxSizeProvider
-    {
-        void DisplayChessboard(IEnumerable<char> chessboardItems);
-        void DisplayChessboardHelp(IEnumerable<string> helpItems);
-        void DisplayChessboardTask(IEnumerable<string> taskItems);
-    }
-
-    class ChessboardView : IChessboardView
-    {
-        public uint MaxWidth => (uint)Console.WindowWidth;
-
-        public uint MaxHeight => (uint)Console.WindowHeight;
-
-        public void DisplayChessboard(IEnumerable<char> chessboardItems)
+        public uint MaxWidth
         {
-            Console.WriteLine();
-            foreach (var item in chessboardItems)
+            get { return (uint)Console.WindowWidth; } 
+        }
+
+        public uint MaxHeight
+        {
+            get { return (uint)Console.WindowHeight; }
+        }
+        
+        public void DisplayChessboard(IEnumerable<Cell> chessboardCells)
+        {
+            Console.WriteLine($"==================== Chessboard ====================");
+            int flag = 0;
+            foreach (var cell in chessboardCells)
             {
-                Console.Write(item);
+                if (flag != cell.Row)
+                {
+                    Console.WriteLine();
+                    flag = cell.Row;
+                }
+                
+                switch (cell.IsWhite)
+                {
+                    case false:
+                        Console.Write('*');
+                        break;
+                    case true:
+                        Console.Write(' ');
+                        break;
+                }
             }
             Console.WriteLine();
         }
 
-        public void DisplayChessboardHelp(IEnumerable<string> helpItems)
+        public void DisplayChessboardHelp()
         {
-            foreach (var item in helpItems)
-            {
-                Console.WriteLine(item);
-            }
+            Console.WriteLine();
+            Console.WriteLine("======================== Help =======================");
+            Console.WriteLine("Usage: Chessboard.exe <width> <height>");
+            Console.WriteLine($"Width is an integer from 1 to {MaxWidth}.");
+            Console.WriteLine($"Height is an integer from 1 to {MaxHeight}.");
+            Console.WriteLine();
         }
-        public void DisplayChessboardTask(IEnumerable<string> taskItems)
+
+        public void DisplayChessboardTask()
         {
-            foreach (var item in taskItems)
-            {
-                Console.WriteLine(item);
-            }
+            Console.WriteLine();
+            Console.WriteLine($"================= Task 1 Chessboard ================");
+            Console.WriteLine("Output a chessboard with a set height and width, on the principle of:");
+            Console.WriteLine("* * * * * * ");
+            Console.WriteLine(" * * * * * *");
+            Console.WriteLine("* * * * * * ");
+            Console.WriteLine(" * * * * * *");
+            Console.WriteLine("The program runs through a main class call with parameters.");
+            Console.WriteLine();
+        }
+
+        public void DisplayMessage(string text)
+        {
+            Console.WriteLine(text);
         }
     }
 }

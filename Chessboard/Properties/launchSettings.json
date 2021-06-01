@@ -2,7 +2,7 @@
   "profiles": {
     "Chessboard": {
       "commandName": "Project",
-      "commandLineArgs": "20 25 -help"
+      "commandLineArgs": "40 50"
     }
   }
 }
