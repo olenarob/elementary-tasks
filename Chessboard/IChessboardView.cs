@@ -2,7 +2,7 @@
 
 namespace ChessboardApp
 {
-    public interface IChessboardView : IMaxSideProvider
+    public interface IChessboardView
     {
         void DisplayChessboard(IEnumerable<Cell> chessboardCells);
         void DisplayChessboardHelp();

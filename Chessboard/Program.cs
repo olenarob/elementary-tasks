@@ -6,7 +6,7 @@ namespace ChessboardApp
     {
         static void Main(string[] args)
         {
-            IChessboardView chessboardView = new ChessboardView();
+            var chessboardView = new ChessboardView();
             
             foreach (var arg in args)
             {

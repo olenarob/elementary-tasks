@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ChessboardApp
 {
-    public class ChessboardView : IChessboardView
+    public class ChessboardView : IChessboardView, IMaxSideProvider
     {
         public uint MaxWidth
         {
