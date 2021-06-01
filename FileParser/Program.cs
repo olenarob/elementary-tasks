@@ -3,7 +3,7 @@ using System.IO;
 
 namespace FileParser
 {
-    partial class Program
+    class Program
     {
         static void Main(string[] args)
         {
@@ -11,7 +11,6 @@ namespace FileParser
             var model = new FileParser();
             var controller = new Controller(model, view);
             controller.DisplayInfo(args);
-            
         }
     }
 }

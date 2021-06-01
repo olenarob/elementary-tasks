@@ -20,11 +20,10 @@ namespace FileParser
                 switch (args.Length)
                 {
                     case 2:
-                        model.SearchInFile(args[0], args[1]);
+                        view.DisplayMessage(model.SearchInFile(args[0], args[1]));
                         break;
                     case 3:
-                        model.ReplaceInFile(args[0], args[1], args[2]);
-                        view.DisplayMessage($"FileParser has completed the processing of {args[0]}.");
+                        view.DisplayMessage(model.ReplaceInFile(args[0], args[1], args[2]));
                         break;
                     default:
                         view.DisplayHelp();

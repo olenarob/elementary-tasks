@@ -2,7 +2,7 @@
 {
     public interface IFileParser
     {
-        void SearchInFile(string sourceFileName, string lineToSearch);
-        void ReplaceInFile(string sourceFileName, string lineToSearch, string lineToReplace);
+        string SearchInFile(string sourceFileName, string lineToSearch);
+        string ReplaceInFile(string sourceFileName, string lineToSearch, string lineToReplace);
     }
 }

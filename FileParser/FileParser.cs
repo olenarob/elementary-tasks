@@ -5,27 +5,30 @@ namespace FileParser
 {
     class FileParser : IFileParser
     {
-        public void SearchInFile(string sourceFileName, string lineToSearch)
+        private char[] separators = new char[] { ' ', ',', '.', '?', '!' };
+        public string SearchInFile(string sourceFileName, string lineToSearch)
         {
             using (var reader = new StreamReader(sourceFileName))
             {
                 int count = 0;
                 string line;
+
                 while ((line = reader.ReadLine()) != null)
                 {
-                    /*if (true)
+                    string[] words = line.Split(separators,StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var word in words)
                     {
-                        string tmpline = line.Split(new char[] { ' ', ',', '.', '?', '!' },
-                            lineToSearch);
-                    }*/
-                    count += line.Split(lineToSearch).Length - 1;
+                        if (word == lineToSearch)
+                        {
+                            count++;
+                        }
+                    }
                 }
-                Console.WriteLine(@$"There are {count} strings ""{lineToSearch}"" in {sourceFileName}.");
+                return @$"There are {count} strings ""{lineToSearch}"" in {sourceFileName}.";
             }
         }
-        public void ReplaceInFile(string sourceFileName, string lineToSearch, string lineToReplace)
+        public string ReplaceInFile(string sourceFileName, string lineToSearch, string lineToReplace)
         {
-
             string tmpFileName = Path.Combine(Path.GetDirectoryName(sourceFileName), "tmp.txt");
 
             using (var writer = new StreamWriter(tmpFileName))
@@ -43,6 +46,8 @@ namespace FileParser
 
             File.Copy(tmpFileName, sourceFileName, true);
             File.Delete(tmpFileName);
+
+            return $"FileParser has completed the processing of {sourceFileName}.";
         }
     }
 }
