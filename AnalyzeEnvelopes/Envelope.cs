@@ -10,25 +10,23 @@ namespace AnalysisOfEnvelopes
         public double ShortSide
         {
             get { return shortSide; }
-            set { shortSide = Validate(value); }
         }
 
         public double LongSide
         {
             get { return longSide; }
-            set { longSide = Validate(value); }
         }
         
         public Envelope(double side1, double side2)
         {
-            Validate(side1);
-            Validate(side2);
+            ValidateSide(side1);
+            ValidateSide(side2);
             
             shortSide = Math.Min(side1, side2);
             longSide  = Math.Max(side1, side2);
         }
         
-        private static double Validate(double value)
+        public static double ValidateSide(double value)
         {
             if ((value <= 0) || (value > double.MaxValue))
             {

@@ -1,23 +1,23 @@
-﻿using ArgumentsProcessor;
-using System;
+﻿using System;
 
 namespace AnalysisOfEnvelopes
 {
     public class Controller
     {
-        private EnvelopeManager model;
+        private EnvelopeAnalyser model;
         private View view;
 
-        public Controller(EnvelopeManager envelopeManager, View view)
+        public Controller(EnvelopeAnalyser model, View view)
         {
-            this.model = envelopeManager;
+            this.model = model;
             this.view = view;
 
-            model.NewEnvelope += ViewMsg;
+            this.model.NewPairOfEnvelopes += ViewMsg;
         }
 
         private void ViewMsg()
         {
+            view.DisplayMessage("");
             view.DisplayMessage(model.CheckInsertion());
         }
         
@@ -26,26 +26,39 @@ namespace AnalysisOfEnvelopes
             string userAnswer;
             do
             {
-                var envelope1 = GetEnvelopeFromUserInput(1);
-                var envelope2 = GetEnvelopeFromUserInput(2);
-                model.SetEnvelopes(envelope1, envelope2);
-                
-                userAnswer = view.GetUserValue("Try again? (y/yes): ");
+                model.SetEnvelopes(GetEnvelope(1), GetEnvelope(2));
+
+                userAnswer = view.GetUserMessage("Try again? (y/yes): ");
             }
-            while (IfRepeat(userAnswer));
+            while (userAnswer.Equals("y", StringComparison.CurrentCultureIgnoreCase)
+                || userAnswer.Equals("yes", StringComparison.CurrentCultureIgnoreCase));
         }
 
-        private static bool IfRepeat(string userAnswer)
+        private Envelope GetEnvelope(int envelopeIndex)
         {
-            return userAnswer.Equals("y", StringComparison.CurrentCultureIgnoreCase)
-                || userAnswer.Equals("yes", StringComparison.CurrentCultureIgnoreCase);
-        }
-        private static Envelope GetEnvelopeFromUserInput(int envelopeIndex)
-        {
-            double side1 = Argument.GetValueFromUser($" first side of envelope {envelopeIndex}", double.Epsilon, double.MaxValue);
-            double side2 = Argument.GetValueFromUser($"second side of envelope {envelopeIndex}", double.Epsilon, double.MaxValue);
+            double side1 = GetSideOfEnvelope(envelopeIndex, 1);
+            double side2 = GetSideOfEnvelope(envelopeIndex, 2);
 
             return new Envelope(side1, side2);
+        }
+
+        private double GetSideOfEnvelope(int envelopeIndex, int sideIndex)
+        {
+            double side = 0;
+            do
+            {
+                try
+                {
+                    side = Envelope.ValidateSide(double.Parse(view.GetUserMessage
+                        ($"Please enter {sideIndex} side of envelope {envelopeIndex}: ")));
+                }
+                catch (Exception ex)
+                {
+                    view.DisplayMessage(ex.Message);
+                }
+            } while (side == 0);
+            
+            return side;
         }
     }
 }
