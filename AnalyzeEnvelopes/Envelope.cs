@@ -1,43 +1,41 @@
-﻿namespace AnalysisOfEnvelopes
-{
-    public class Envelope
-    {
-        private readonly double shortSide;
-        private readonly double longSide;
+﻿using System;
 
+namespace AnalysisOfEnvelopes
+{
+    public struct Envelope
+    {
+        private double shortSide;
+        private double longSide;
+        
+        public double ShortSide
+        {
+            get { return shortSide; }
+            set { shortSide = Validate(value); }
+        }
+
+        public double LongSide
+        {
+            get { return longSide; }
+            set { longSide = Validate(value); }
+        }
+        
         public Envelope(double side1, double side2)
         {
-            if (side1 < side2)
-            {
-                shortSide = side1;
-                longSide = side2;
-            }
-            else
-            {
-                shortSide = side2;
-                longSide = side1;
-            }
-        }
-
-        bool IsInsertedInto(Envelope that)
-        {
-            return (this.shortSide < that.shortSide) && (this.longSide < that.longSide);
-        }
-
-        public string CheckInsertion(Envelope that)
-        {
-            string result = "None of the envelopes cannot be inserted into the other.";
+            Validate(side1);
+            Validate(side2);
             
-            if (this.IsInsertedInto(that))
+            shortSide = Math.Min(side1, side2);
+            longSide  = Math.Max(side1, side2);
+        }
+        
+        private static double Validate(double value)
+        {
+            if ((value <= 0) || (value > double.MaxValue))
             {
-                result = $"Envelope with sides ({this.shortSide}, {this.longSide}) can be inserted into envelope with sides ({that.shortSide}, {that.longSide}).";
+                throw new OverflowException
+                    ($"The side of envelope can not be less than zero or more than {double.MaxValue}!");
             }
-            else if (that.IsInsertedInto(this))
-            {
-                result = $"Envelope with sides ({this.shortSide}, {this.longSide}) can be inserted into envelope with sides ({this.shortSide}, {this.longSide})."; 
-            }
-            
-            return result;
+            return value;
         }
     }
 }
