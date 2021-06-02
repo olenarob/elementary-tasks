@@ -5,24 +5,31 @@ namespace AnalysisOfEnvelopes
 {
     public class Controller
     {
-        private PairOfEnvelopes model;
+        private EnvelopeManager model;
         private View view;
 
-        public Controller(PairOfEnvelopes model, View view)
+        public Controller(EnvelopeManager envelopeManager, View view)
         {
-            this.model = model;
+            this.model = envelopeManager;
             this.view = view;
+
+            model.NewEnvelope += ViewMsg;
         }
 
+        private void ViewMsg()
+        {
+            view.DisplayMessage(model.CheckInsertion());
+        }
+        
         public void Run()
         {
             string userAnswer;
             do
             {
-                model.Envelope1 = GetEnvelopeFromUserInput(1);
-                model.Envelope2 = GetEnvelopeFromUserInput(2);
-                view.DisplayMessage(model.CheckInsertion());
-
+                var envelope1 = GetEnvelopeFromUserInput(1);
+                var envelope2 = GetEnvelopeFromUserInput(2);
+                model.SetEnvelopes(envelope1, envelope2);
+                
                 userAnswer = view.GetUserValue("Try again? (y/yes): ");
             }
             while (IfRepeat(userAnswer));

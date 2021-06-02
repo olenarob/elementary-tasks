@@ -4,6 +4,7 @@ namespace AnalysisOfEnvelopes
 {
     public class View
     {
+        
         public void DisplayHelp()
         {
             Console.WriteLine("Usage: AnalysisOfEnvelopes.exe [-help]");
