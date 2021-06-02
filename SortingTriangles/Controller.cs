@@ -5,27 +5,16 @@ namespace SortingTriangles
 {
     public class Controller
     {
-        private Triangle model;
+        private List<Triangle> triangles;
         private View view;
 
-        public Controller(Triangle model, View view)
+        public Controller(List<Triangle> triangles, View view)
         {
-            this.model = model;
+            this.triangles = triangles;
             this.view = view;
-
-            //this.model.NewPairOfEnvelopes += ViewMsg;
         }
-        /*
-        private void ViewMsg()
-        {
-            view.DisplayMessage("");
-            view.DisplayMessage(model.CheckInsertion());
-        }
-        */
         public void Run()
         {
-            var triangles = new List<Triangle>();
-
             string userAnswer;
             do
             {
@@ -41,7 +30,7 @@ namespace SortingTriangles
 
             triangles.Sort(Triangle.CompareAreaDesc);
 
-            DisplayTrianglesList(triangles);
+            DisplayTrianglesList();
         }
         private bool TryGetTriangle(out Triangle triangle)
         {
@@ -49,7 +38,7 @@ namespace SortingTriangles
             bool success = false;
 
             string[] userInput = view.GetArrayOfUserMessage
-                ("Please enter the name and sides of the triangle through the comma:");
+                ("\nPlease enter the name and sides of the triangle through the comma:");
             
             try
             {
@@ -103,9 +92,9 @@ namespace SortingTriangles
             return success;
         }
         
-        private void DisplayTrianglesList(List<Triangle> triangles)
+        private void DisplayTrianglesList()
         {
-            view.DisplayMessage($"\n===============Triangles list:===============");
+            view.DisplayMessage("\n===============Triangles list:===============");
             
             for (int i = 0; i < triangles.Count; i++)
             {
