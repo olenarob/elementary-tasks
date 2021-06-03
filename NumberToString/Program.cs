@@ -7,25 +7,24 @@ namespace NumberToString
     {
         static void Main(string[] args)
         {
-            try
+            var view = new View();
+            
+            foreach (var arg in args)
             {
-                var number = BigInteger.Parse(args[0]);
-                var number1 = new NumberToString(number);
-                Console.WriteLine($"{number:N0} - {number1}");
-                Console.Write(number1.Number);
+                switch (arg)
+                {
+                    case "-help":
+                        view.DisplayHelp();
+                        break;
+                    case "-task":
+                    default:
+                        view.DisplayTask();
+                        break;
+                }
             }
-            catch (IndexOutOfRangeException)
-            {
-                Console.WriteLine("Usage: NumberToString.exe <integer positive number>");
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("The input string is not a sequence of digit!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            var model = new NumberToString();
+            var controller = new Controller(model, view);
+            controller.Run(args);
         }
     }
 }

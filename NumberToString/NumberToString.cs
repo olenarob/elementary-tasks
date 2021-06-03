@@ -40,7 +40,10 @@ namespace NumberToString
                     this.number = value;
             }
         }
-        
+
+        public NumberToString()
+        {
+        }
         public NumberToString (BigInteger num)
         {
             Number = num;            
@@ -66,14 +69,15 @@ namespace NumberToString
                 {
                     TripleDigitNumberToString(threeDigits, sb);
                     
-                    if (rank > 0)
+                    if (rank >= 0)
                     {
-                        sb.Append(' ').AppendLine(Enum.GetName((PowerOfTen)rank));
+                        //sb.Append(' ').AppendLine(Enum.GetName((PowerOfTen)rank));
+                        sb.Append(' ').AppendLine(NumberScaleName.numberScaleNameShortScale(rank));
                     }
                 }
                 
                 number /= 1000;
-                rank += 3;
+                rank ++;
                 
                 stack.Push(sb.ToString());
                 sb.Clear();
@@ -83,7 +87,8 @@ namespace NumberToString
             {
                 sb.Append(item);
             }
-            return sb.ToString().TrimStart().ToLower();
+            
+            return sb.ToString().ToLower();
         }
         
         private static void TripleDigitNumberToString(int threeDigits, StringBuilder sb)
