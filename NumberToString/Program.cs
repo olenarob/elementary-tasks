@@ -10,11 +10,13 @@ namespace NumberToString
             try
             {
                 var number = BigInteger.Parse(args[0]);
-                Console.Write($"{number:N0} - {new NumberToString(number)}");
+                var number1 = new NumberToString(number);
+                Console.WriteLine($"{number:N0} - {number1}");
+                Console.Write(number1.Number);
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine("Usage: NumberToString [number]");
+                Console.WriteLine("Usage: NumberToString.exe <integer positive number>");
             }
             catch (FormatException)
             {

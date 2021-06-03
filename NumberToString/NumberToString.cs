@@ -7,14 +7,14 @@ namespace NumberToString
 {
     public class NumberToString
     {
-        enum NumbersName
+        enum SmallNumber
         {
-            Zero = 0, One = 1, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten,
+            One = 1, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten,
             Eleven, Twelve, Thirteen, Fourteen, Fifteen, Sixteen, Seventeen,
             Eighteen, Nineteen, Twenty, Thirty = 30, Fourty = 40, Fifty = 50,
             Sixty = 60, Seventy = 70, Eighty = 80, Ninety = 90, Hundred = 100
         }
-        enum RanksName
+        enum PowerOfTen
         {
             Thousand = 3, Million = 6, Billion = 9, Trillion = 12, Quadrillion = 15,
             Quintillion = 18, Sextillion = 21, Septillion = 24, Octillion = 27,
@@ -34,7 +34,7 @@ namespace NumberToString
                 if (value < 1)
                 {
                     throw new OverflowException
-                        ($"The number can not be less 1. Please use positive integer more than zero.");
+                        ($"Please use positive integer number more than zero!");
                 }
                 else    
                     this.number = value;
@@ -48,27 +48,27 @@ namespace NumberToString
         
         static string ToName (int num)
         {
-            return Enum.GetName((NumbersName)num);
+            return Enum.GetName((SmallNumber)num);
         }
         
         public override string ToString()
         {
-            var sb = new StringBuilder();
             var stack = new Stack<string>();
+            var sb = new StringBuilder();
+            
             int rank = 0;
             
             while(number != 0)
             {
-                int tripleDigitNumber = (int)(number % 1000);
+                int threeDigits = (int)(number % 1000);
                 
-            
-                if (tripleDigitNumber != 0)
+                if (threeDigits != 0)
                 {
-                    TripleDigitNumberToString(tripleDigitNumber, sb);
+                    TripleDigitNumberToString(threeDigits, sb);
                     
                     if (rank > 0)
                     {
-                        sb.Append(' ').AppendLine(Enum.GetName((RanksName)rank));
+                        sb.Append(' ').AppendLine(Enum.GetName((PowerOfTen)rank));
                     }
                 }
                 
@@ -86,11 +86,11 @@ namespace NumberToString
             return sb.ToString().TrimStart().ToLower();
         }
         
-        private static void TripleDigitNumberToString(int tripleDigitNumber, StringBuilder sb)
+        private static void TripleDigitNumberToString(int threeDigits, StringBuilder sb)
         {
-            int hundreds = tripleDigitNumber / 100;
-            int remainder = tripleDigitNumber % 100;
-            
+            int remainder = threeDigits % 100;
+            int hundreds = threeDigits / 100;
+
             if (hundreds != 0)
             {
                 sb.Append(' ').Append(ToName(hundreds))
@@ -99,15 +99,16 @@ namespace NumberToString
             
             if (remainder != 0)
             {
-                if (Enum.IsDefined(typeof(NumbersName), remainder))
+                if (Enum.IsDefined(typeof(SmallNumber), remainder))
                 {
                     sb.Append(' ').Append(ToName(remainder));
                 }
                 else
                 {
                     int tens = remainder / 10 * 10;
+                    int units = threeDigits % 10;
                     sb.Append(' ').Append(ToName(tens))
-                      .Append(' ').Append(ToName(tripleDigitNumber % 10));
+                      .Append(' ').Append(ToName(units));
                 }
             }
         }
