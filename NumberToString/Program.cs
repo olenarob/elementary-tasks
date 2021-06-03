@@ -1,5 +1,5 @@
-﻿using ArgumentsProcessor;
-using System;
+﻿using System;
+using System.Numerics;
 
 namespace NumberToString
 {
@@ -9,19 +9,18 @@ namespace NumberToString
         {
             try
             {
-                //if (Argument.TryParse<int>(args[0], 1, int.MaxValue, out int number))
-                int number = int.Parse(args[0]);
+                var number = BigInteger.Parse(args[0]);
                 Console.Write($"{number:N0} - {new NumberToString(number)}");
             }
             catch (IndexOutOfRangeException)
             {
                 Console.WriteLine("Usage: NumberToString [number]");
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("The input string is not a sequence of digit!");
             }
-            catch (OverflowException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

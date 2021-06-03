@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace NumberToString
@@ -10,13 +12,21 @@ namespace NumberToString
             Zero = 0, One = 1, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten,
             Eleven, Twelve, Thirteen, Fourteen, Fifteen, Sixteen, Seventeen,
             Eighteen, Nineteen, Twenty, Thirty = 30, Fourty = 40, Fifty = 50,
-            Sixty = 60, Seventy = 70, Eighty = 80, Ninety = 90, Hundred = 100,
-            Thousand = 1_000, Million = 1_000_000, Billion = 1_000_000_000
+            Sixty = 60, Seventy = 70, Eighty = 80, Ninety = 90, Hundred = 100
         }
-    
-        private int number;
+        enum RanksName
+        {
+            Thousand = 3, Million = 6, Billion = 9, Trillion = 12, Quadrillion = 15,
+            Quintillion = 18, Sextillion = 21, Septillion = 24, Octillion = 27,
+            Nonillion = 30, Decillion = 33, Undecillion = 36, Doudecillion = 39,
+            Tredecillion = 42, Quattuordecillion = 45, Quindecillion = 48,
+            Sexdecillion = 51, Septendecillion = 54, Octodecillion = 57,
+            Novemdecillion = 60, Vigintillion = 63
+        }
 
-        public int Number
+        private BigInteger number;
+
+        public BigInteger Number
         {
             get { return number; }
             set
@@ -31,7 +41,7 @@ namespace NumberToString
             }
         }
         
-        public NumberToString (int num)
+        public NumberToString (BigInteger num)
         {
             Number = num;            
         }
@@ -44,27 +54,35 @@ namespace NumberToString
         public override string ToString()
         {
             var sb = new StringBuilder();
-
-            int divisor = 1_000_000_000;
+            var stack = new Stack<string>();
+            int rank = 0;
             
-            do
+            while(number != 0)
             {
-                int tripleDigitNumber = number / divisor % 1000;
+                int tripleDigitNumber = (int)(number % 1000);
+                
             
                 if (tripleDigitNumber != 0)
                 {
                     TripleDigitNumberToString(tripleDigitNumber, sb);
                     
-                    if (divisor > 1)
+                    if (rank > 0)
                     {
-                        sb.Append(' ').AppendLine(ToName(divisor));
+                        sb.Append(' ').AppendLine(Enum.GetName((RanksName)rank));
                     }
                 }
                 
-                divisor /= 1000;
+                number /= 1000;
+                rank += 3;
+                
+                stack.Push(sb.ToString());
+                sb.Clear();
             }
-            while (divisor != 0);
 
+            foreach (var item in stack)
+            {
+                sb.Append(item);
+            }
             return sb.ToString().TrimStart().ToLower();
         }
         
