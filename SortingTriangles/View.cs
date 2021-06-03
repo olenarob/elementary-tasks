@@ -18,7 +18,10 @@ namespace SortingTriangles
         public string[] GetArrayOfUserMessage(string text)
         {
             Console.WriteLine(text);
-            return Console.ReadLine().Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var userInput = Console.ReadLine();
+            var flags = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
+            var args = userInput.Split(new char[] { ',', ' ' }, flags);
+            return args;
         }
     }
 }

@@ -43,10 +43,10 @@ namespace SortingTriangles
             try
             {
                 string name = userInput[0];
-                if (name.Equals(""))
+                if (string.IsNullOrWhiteSpace(name))
                 {
                     throw new FormatException("Name of the triangle cannot be empty!");
-                }
+                } 
 
                 double[] sides = new double[3];
 
@@ -75,14 +75,6 @@ namespace SortingTriangles
             catch (IndexOutOfRangeException)
             {
                 view.DisplayMessage("Usage: <name>, <length of side>, <length of side>, <length of side>");
-            }
-            catch (FormatException ex)
-            {
-                view.DisplayMessage(ex.Message);
-            }
-            catch (OverflowException ex)
-            {
-                view.DisplayMessage(ex.Message);
             }
             catch (Exception ex)
             {
