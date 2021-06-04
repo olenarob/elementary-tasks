@@ -1,8 +1,10 @@
-﻿namespace LuckyTickets
+﻿using System;
+
+namespace LuckyTickets
 {
     public class Ticket
     {
-        public string ticketNumber;
+        private string ticketNumber;
         private readonly string format;
         private readonly int numberOfDigits;
 
@@ -15,22 +17,22 @@
         public string TicketNumber
         {
             get { return ticketNumber; }
-            //set
-            //{
-            //    for (int i = 0; i < 6; i++)
-            //    {
-            //        if (!char.IsDigit(value[i]))
-            //        {
-            //            throw new FormatException("Input string is not a sequence of digits.");
-            //        }
-            //    }
-            //    ticketNumber = value;
-            //}
+            set
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    if (!char.IsDigit(value[i]))
+                    {
+                        throw new FormatException("Input string is not a sequence of 6 digits!");
+                    }
+                }
+                ticketNumber = value;
+            }
         }
 
         public void SetNumber(int value)
         {
-            ticketNumber = value.ToString(format);
+            TicketNumber = value.ToString(format);
         }
 
         static int CharToInt(char digit)

@@ -2,7 +2,7 @@
   "profiles": {
     "LuckyTickets": {
       "commandName": "Project",
-      "commandLineArgs": "00000 99999"
+      "commandLineArgs": "000000 999999"
     }
   }
 }
