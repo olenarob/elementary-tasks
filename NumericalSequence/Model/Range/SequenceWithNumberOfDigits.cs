@@ -11,15 +11,15 @@ namespace NumericalSequences
             this.numberOfDigits = numberOfDigits;
         }
 
-        public bool IsContinue(uint nextElement, int index)
+        bool ISequenceRange.IsContinue(int nextElement, int index)
         {
-            uint tmp = nextElement / (uint)Math.Pow(10, numberOfDigits);
+            uint tmp = (uint)(nextElement / Math.Pow(10, numberOfDigits));
             return tmp == 0;
         }
 
-        public bool IsReturn(uint nextElement, int index)
+        bool ISequenceRange.IsReturn(int nextElement, int index)
         {
-            int tmp = nextElement.ToString().Length;
+            uint tmp = (uint)nextElement.ToString().Length;
             return tmp == numberOfDigits;
         }
     }

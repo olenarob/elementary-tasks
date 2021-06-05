@@ -11,13 +11,13 @@ namespace NumericalSequences
             this.range = range;
         }
 
-        protected abstract uint GetNextElement();
+        protected abstract int GetNextElement();
 
         protected abstract void Reset();
 
-        public IEnumerable<uint> GetSequence()
+        public IEnumerable<int> GetSequence()
         {
-            uint tmp = GetNextElement();
+            int tmp = GetNextElement();
 
             for (int i = 0; range.IsContinue(tmp, i); i++)
             {

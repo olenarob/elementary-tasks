@@ -8,10 +8,11 @@
         {
         }
 
-        protected override uint GetNextElement()
+        protected override int GetNextElement()
         {
-            return a++;
+            return (int)a++;
         }
+
         protected override void Reset()
         {
             a = 0;

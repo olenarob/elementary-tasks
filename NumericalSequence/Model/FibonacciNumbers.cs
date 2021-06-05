@@ -1,15 +1,15 @@
 ﻿namespace NumericalSequences
 {
-    public class Fibonacci : NumericalSequence
+    public class FibonacciNumbers : NumericalSequence
     {
         private uint a = 0;
         private uint b = 0;
 
-        public Fibonacci(ISequenceRange range): base(range)
+        public FibonacciNumbers(ISequenceRange range): base(range)
         {
         }
 
-        protected override uint GetNextElement()
+        protected override int GetNextElement()
         {
             uint c = a + b;
             switch (c)
@@ -22,7 +22,7 @@
                     b = c;
                     break;
             }
-            return c;
+            return (int)c;
         }
         protected override void Reset()
         {

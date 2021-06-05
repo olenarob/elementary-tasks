@@ -2,7 +2,7 @@
 
 namespace NumericalSequences
 {
-    public class View
+    public class SequenceView
     {
         public void DisplayHelp()
         {
@@ -33,7 +33,17 @@ namespace NumericalSequences
         }
         public void DisplayMessage(string text)
         {
+            Console.WriteLine(text);
+        }
+        public void DisplayNumber(int number)
+        {
+            Console.Write($"{number} ");
+        }
+        public string GetUserMessage(string text)
+        {
+            Console.WriteLine();
             Console.Write(text);
+            return Console.ReadLine();
         }
     }
 }

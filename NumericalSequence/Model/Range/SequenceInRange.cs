@@ -2,21 +2,21 @@
 {
     public struct SequenceInRange : ISequenceRange
     {
-        private uint lowerRange;
-        private uint upperRange;
+        private int lowerRange;
+        private int upperRange;
 
-        public SequenceInRange(uint lowerRange, uint upperRange)
+        public SequenceInRange(int lowerRange, int upperRange)
         {
             this.lowerRange = lowerRange;
             this.upperRange = upperRange;
         }
 
-        public bool IsContinue(uint nextElement, int index)
+        bool ISequenceRange.IsContinue(int nextElement, int index)
         {
             return nextElement <= upperRange;
         }
 
-        public bool IsReturn(uint nextElement, int index)
+        bool ISequenceRange.IsReturn(int nextElement, int index)
         {
             return nextElement >= lowerRange;
         }

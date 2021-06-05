@@ -3,22 +3,22 @@
     public struct SequenceWithLength : ISequenceRange
     {
         private uint length;
-        private uint lowerRange;
-        int firstIndex;
+        private int lowerRange;
+        private int firstIndex;
 
-        public SequenceWithLength(uint length, uint lowerRange)
+        public SequenceWithLength(uint length, int lowerRange)
         {
             this.length = length;
             this.lowerRange = lowerRange;
             this.firstIndex = 0;
         }
 
-        public bool IsContinue(uint nextElement, int index)
+        bool ISequenceRange.IsContinue(int nextElement, int index)
         {
             return index < firstIndex + length;
         }
 
-        public bool IsReturn(uint nextElement, int index)
+        bool ISequenceRange.IsReturn(int nextElement, int index)
         {
             bool result = (nextElement >= lowerRange);
 
