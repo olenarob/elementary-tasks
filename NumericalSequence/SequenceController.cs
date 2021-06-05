@@ -5,23 +5,26 @@ namespace NumericalSequences
     public class SequenceController
     {
         private NumericalSequence model;
-        private SequenceView view;
+        private ISequenceView view;
 
-        public SequenceController(NumericalSequence model, SequenceView view)
+        public SequenceController(NumericalSequence model, ISequenceView view)
         {
             this.Model = model;
-            this.view = view;
+            this.View = view;
         }
 
         public NumericalSequence Model { get => model; set => model = value; }
+        public ISequenceView View { get => view; set => view = value; }
 
         public void DisplaySequence()
         {
-            foreach (int number in Model.GetSequence())
+            view.DisplayMessage(Model.GetType().Name);
+
+            foreach (ulong number in Model.GetSequence())
             {
-                view.DisplayNumber(number);
+                View.DisplayNumber(number);
             }
-            view.DisplayMessage(Environment.NewLine);
+            View.DisplayMessage(Environment.NewLine);
         }
     }
 }

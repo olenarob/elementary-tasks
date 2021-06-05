@@ -1,22 +1,29 @@
-﻿namespace NumericalSequences
+﻿using System;
+
+namespace NumericalSequences
 {
     public struct SequenceInRange : ISequenceRange
     {
-        private int lowerRange;
-        private int upperRange;
+        private readonly ulong lowerRange;
+        private readonly ulong upperRange;
 
-        public SequenceInRange(int lowerRange, int upperRange)
+        public SequenceInRange(ulong lowerRange, ulong upperRange)
         {
+            if (lowerRange > upperRange)
+            {
+                throw new ArgumentException("Upper range can not be less than lower range!");
+            }
+            
             this.lowerRange = lowerRange;
             this.upperRange = upperRange;
         }
 
-        bool ISequenceRange.IsContinue(int nextElement, int index)
+        bool ISequenceRange.IsContinue(ulong nextElement, ulong index)
         {
             return nextElement <= upperRange;
         }
 
-        bool ISequenceRange.IsReturn(int nextElement, int index)
+        bool ISequenceRange.IsReturn(ulong nextElement, ulong index)
         {
             return nextElement >= lowerRange;
         }

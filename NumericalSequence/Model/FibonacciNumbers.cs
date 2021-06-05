@@ -2,16 +2,16 @@
 {
     public class FibonacciNumbers : NumericalSequence
     {
-        private uint a = 0;
-        private uint b = 0;
+        private ulong a = 0;
+        private ulong b = 0;
 
         public FibonacciNumbers(ISequenceRange range): base(range)
         {
         }
 
-        protected override int GetNextElement()
+        protected override ulong GetNextElement()
         {
-            uint c = a + b;
+            ulong c = a + b;
             switch (c)
             {
                 case 0:
@@ -22,7 +22,7 @@
                     b = c;
                     break;
             }
-            return (int)c;
+            return c;
         }
         protected override void Reset()
         {

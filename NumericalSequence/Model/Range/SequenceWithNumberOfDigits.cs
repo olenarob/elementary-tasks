@@ -4,23 +4,29 @@ namespace NumericalSequences
 {
     public struct SequenceWithNumberOfDigits : ISequenceRange
     {
-        private uint numberOfDigits;
+        private readonly ulong lowerRange;
+        private readonly ulong upperRange;
 
-        public SequenceWithNumberOfDigits(uint numberOfDigits)
+        public SequenceWithNumberOfDigits(byte numberOfDigits)
         {
-            this.numberOfDigits = numberOfDigits;
+            byte maxNumberOfDigits = (byte)Math.Log10(ulong.MaxValue);
+            if (numberOfDigits > maxNumberOfDigits)
+            {
+                throw new OverflowException($"Number of digits can not be more than {maxNumberOfDigits}");
+            }
+            
+            this.lowerRange = (ulong)Math.Pow(10, numberOfDigits - 1);
+            this.upperRange = (ulong)Math.Pow(10, numberOfDigits);
         }
 
-        bool ISequenceRange.IsContinue(int nextElement, int index)
+        bool ISequenceRange.IsContinue(ulong nextElement, ulong index)
         {
-            uint tmp = (uint)(nextElement / Math.Pow(10, numberOfDigits));
-            return tmp == 0;
+            return nextElement <= upperRange;
         }
 
-        bool ISequenceRange.IsReturn(int nextElement, int index)
+        bool ISequenceRange.IsReturn(ulong nextElement, ulong index)
         {
-            uint tmp = (uint)nextElement.ToString().Length;
-            return tmp == numberOfDigits;
+            return nextElement > lowerRange && nextElement <= upperRange;
         }
     }
 }

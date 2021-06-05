@@ -2,7 +2,7 @@
 {
     public interface ISequenceRange
     {
-        bool IsContinue(int nextElement, int index);
-        bool IsReturn(int nextElement, int index);
+        bool IsContinue(ulong nextElement, ulong index);
+        bool IsReturn(ulong nextElement, ulong index);
     }
 }

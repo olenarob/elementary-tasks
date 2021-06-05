@@ -2,23 +2,23 @@
 {
     public struct SequenceWithLength : ISequenceRange
     {
-        private uint length;
-        private int lowerRange;
-        private int firstIndex;
+        private readonly ulong length;
+        private readonly ulong lowerRange;
+        private ulong firstIndex;
 
-        public SequenceWithLength(uint length, int lowerRange)
+        public SequenceWithLength(ulong length, ulong lowerRange)
         {
             this.length = length;
             this.lowerRange = lowerRange;
             this.firstIndex = 0;
         }
 
-        bool ISequenceRange.IsContinue(int nextElement, int index)
+        bool ISequenceRange.IsContinue(ulong nextElement, ulong index)
         {
             return index < firstIndex + length;
         }
 
-        bool ISequenceRange.IsReturn(int nextElement, int index)
+        bool ISequenceRange.IsReturn(ulong nextElement, ulong index)
         {
             bool result = (nextElement >= lowerRange);
 

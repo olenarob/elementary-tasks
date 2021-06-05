@@ -2,15 +2,15 @@
 {
     public class NaturalNumbers : NumericalSequence
     {
-        private uint a = 0;
+        private ulong a = 1;
 
         public NaturalNumbers(ISequenceRange range) : base(range)
         {
         }
 
-        protected override int GetNextElement()
+        protected override ulong GetNextElement()
         {
-            return (int)a++;
+            return a++;
         }
 
         protected override void Reset()

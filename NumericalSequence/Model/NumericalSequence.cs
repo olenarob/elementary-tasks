@@ -4,22 +4,22 @@ namespace NumericalSequences
 {
     public abstract class NumericalSequence
     {
-        private ISequenceRange range;
+        private readonly ISequenceRange range;
 
         protected NumericalSequence(ISequenceRange range)
         {
             this.range = range;
         }
 
-        protected abstract int GetNextElement();
+        protected abstract ulong GetNextElement();
 
         protected abstract void Reset();
 
-        public IEnumerable<int> GetSequence()
+        public IEnumerable<ulong> GetSequence()
         {
-            int tmp = GetNextElement();
+            ulong tmp = GetNextElement();
 
-            for (int i = 0; range.IsContinue(tmp, i); i++)
+            for (ulong i = 0; range.IsContinue(tmp, i); i++)
             {
                 if (range.IsReturn(tmp, i))
                 {

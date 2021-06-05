@@ -2,7 +2,7 @@
   "profiles": {
     "NumericalSequences": {
       "commandName": "Project",
-      "commandLineArgs": "1 10 25"
+      "commandLineArgs": "10 100"
     }
   }
 }
