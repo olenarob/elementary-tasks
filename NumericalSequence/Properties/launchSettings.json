@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "NumericalSequence": {
+    "NumericalSequences": {
       "commandName": "Project",
-      "commandLineArgs": "4 25"
+      "commandLineArgs": "1 10 25"
     }
   }
 }
