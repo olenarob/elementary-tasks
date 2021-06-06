@@ -2,7 +2,7 @@
 {
     class NumberScaleName
     {
-        public static string numberScaleNameShortScale(int power = 0)
+        public static string ToString(int power = 0)
         {
             // Do this first and get out quick as it is the most used 99% of the time
             // You may delete following line if only interested in Powers above 10 (i.e. 1,000^11 and above)

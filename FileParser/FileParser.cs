@@ -6,9 +6,10 @@ namespace FileParser
     class FileParser : IFileParser
     {
         private char[] separators = new char[] { ' ', ',', '.', '?', '!' };
-       /* public string SearchInFile(string sourceFileName, string lineToSearch)
+        /*
+        public string SearchInFile(string sourceFileName, string lineToSearch)
         {
-            using (var reader = new StreamReader(sourceFileName))
+            using (var reader = new StreamReader(sourceFileName, false))
             {
                 int count = 0;
                 string line;
@@ -26,8 +27,8 @@ namespace FileParser
                 }
                 return @$"There are {count} words ""{lineToSearch}"" in {sourceFileName}.";
             }
-        }*/
-
+        }
+        */
         public string SearchInFile(string sourceFileName, string lineToSearch)
         {
             int count = 0;
@@ -45,6 +46,7 @@ namespace FileParser
             }
             return @$"There are {count} words ""{lineToSearch}"" in {sourceFileName}.";
         }
+
         public string ReplaceInFile(string sourceFileName, string lineToSearch, string lineToReplace)
         {
             string tmpFileName = Path.Combine(Path.GetDirectoryName(sourceFileName), "tmp.txt");

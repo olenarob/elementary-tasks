@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileParser
 {
-    class FileStreamParser
+    public class FileStreamParser : IFileParser
     {
         private char[] separators = new char[] { ' ', ',', '.', '?', '!' };
 
-        private static void SearchInFile(string sourceFileName, string lineToSearch)
+        public string SearchInFile(string sourceFileName, string lineToSearch)
         {
             int nextByte;
             string s = lineToSearch;
@@ -58,7 +54,7 @@ namespace FileParser
                     }
                 }
             }
-            Console.WriteLine(@$"There are {count} strings ""{s}"" in {sourceFileName}.");
+            return @$"There are {count} strings ""{s}"" in {sourceFileName}.";
         }
 
         public string ReplaceInFile(string sourceFileName, string lineToSearch, string lineToReplace)

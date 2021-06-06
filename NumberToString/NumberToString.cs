@@ -57,8 +57,6 @@ namespace NumberToString
         public override string ToString()
         {
             var stack = new Stack<string>();
-            var sb = new StringBuilder();
-            
             int rank = 0;
             
             while(number != 0)
@@ -67,54 +65,42 @@ namespace NumberToString
                 
                 if (threeDigits != 0)
                 {
-                    TripleDigitNumberToString(threeDigits, sb);
+                    stack.Push(NumberScaleName.ToString(rank));
                     
-                    if (rank >= 0)
-                    {
-                        //sb.Append(' ').AppendLine(Enum.GetName((PowerOfTen)rank));
-                        sb.Append(' ').AppendLine(NumberScaleName.numberScaleNameShortScale(rank));
-                    }
+                    TripleDigitNumberToString(threeDigits, stack);
                 }
                 
                 number /= 1000;
-                rank ++;
-                
-                stack.Push(sb.ToString());
-                sb.Clear();
+                rank++;
             }
 
-            foreach (var item in stack)
-            {
-                sb.Append(item);
-            }
-            
-            return sb.ToString().ToLower();
+            return string.Join(" ", stack).ToLower();
         }
         
-        private static void TripleDigitNumberToString(int threeDigits, StringBuilder sb)
+        private static void TripleDigitNumberToString(int threeDigits, Stack<string> stack)
         {
             int remainder = threeDigits % 100;
             int hundreds = threeDigits / 100;
 
-            if (hundreds != 0)
-            {
-                sb.Append(' ').Append(ToName(hundreds))
-                  .Append(' ').Append(ToName(100));
-            }
-            
             if (remainder != 0)
             {
                 if (Enum.IsDefined(typeof(SmallNumber), remainder))
                 {
-                    sb.Append(' ').Append(ToName(remainder));
+                    stack.Push(ToName(remainder));
                 }
                 else
                 {
                     int tens = remainder / 10 * 10;
                     int units = threeDigits % 10;
-                    sb.Append(' ').Append(ToName(tens))
-                      .Append(' ').Append(ToName(units));
+                    stack.Push(ToName(units));
+                    stack.Push(ToName(tens));
                 }
+            }
+
+            if (hundreds != 0)
+            {
+                stack.Push(ToName(100));
+                stack.Push(ToName(hundreds));
             }
         }
     }
