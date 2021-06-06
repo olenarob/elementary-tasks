@@ -20,6 +20,8 @@ namespace FileParser
                 switch (args.Length)
                 {
                     case 2:
+                        view.DisplayMessage(args[0]);
+                        view.DisplayMessage(model.FileToString(args[0]));
                         view.DisplayMessage(model.SearchInFile(args[0], args[1]));
                         break;
                     case 3:
