@@ -13,7 +13,7 @@ namespace SortingTriangles
         public string Name { get; }
         public double Area { get; }
 
-        public override string ToString() => $"[Triangle {Name}]: {Area:N} cm";
+        public override string ToString() => $"[Triangle {Name}]: {Area:N} cm{(char)178}";
 
         public static bool IsTriangle(double a, double b, double c)
         {

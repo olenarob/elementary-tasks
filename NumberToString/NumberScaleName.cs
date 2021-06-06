@@ -53,7 +53,7 @@
             string TenName = TensList[Ten];            // Get Tens Name from Array
             string HundName = HundredsList[Hund];        // Get Hundreds Name from Array
             
-            if (Unit == 6 && Ten == 80)
+            if (Unit == 6 && Ten == 8)
             {
                 UnitName += "x";
             }
@@ -64,10 +64,10 @@
                 case 6:
                     switch (Ten)
                     {
-                        case 20:
-                        case 30:
-                        case 40:
-                        case 50:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
                             UnitName += "s";
                             break;
                     }
@@ -76,16 +76,16 @@
                 case 9:
                     switch (Ten)
                     {
-                        case 10:
-                        case 30:
-                        case 40:
-                        case 50:
-                        case 60:
-                        case 70:
+                        case 1:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
                             UnitName += "n";
                             break;
-                        case 20:
-                        case 80:
+                        case 2:
+                        case 8:
                             UnitName += "m";
                             break;
                     }

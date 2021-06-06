@@ -62,14 +62,11 @@ namespace NumberToString
             while(number != 0)
             {
                 int threeDigits = (int)(number % 1000);
-                
                 if (threeDigits != 0)
                 {
                     stack.Push(NumberScaleName.ToString(rank));
-                    
                     TripleDigitNumberToString(threeDigits, stack);
                 }
-                
                 number /= 1000;
                 rank++;
             }
@@ -90,13 +87,12 @@ namespace NumberToString
                 }
                 else
                 {
-                    int tens = remainder / 10 * 10;
                     int units = threeDigits % 10;
+                    int tens = remainder / 10 * 10;
                     stack.Push(ToName(units));
                     stack.Push(ToName(tens));
                 }
             }
-
             if (hundreds != 0)
             {
                 stack.Push(ToName(100));
