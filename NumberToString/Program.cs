@@ -19,7 +19,7 @@
                         break;
                 }
             }
-            NumberToString model = default;
+            NumberToString model = new();
             var controller = new Controller(model, view);
             controller.Run(args);
         }

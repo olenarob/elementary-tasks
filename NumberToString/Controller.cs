@@ -19,7 +19,7 @@ namespace NumberToString
             try
             {
                 var number = BigInteger.Parse(args[0]);
-              //  model.Number = number;
+                model.Number = number;
                 
                 view.DisplayBigNumber(number);
                 view.DisplayMessage(model.ToString());

@@ -5,27 +5,51 @@ using System.Numerics;
 namespace NumberToString
 {
     public class NumberToString
-    { 
-        public static string ToString(BigInteger number)
+    {
+        private BigInteger number;
+
+        public BigInteger Number
         {
-            if (number < 1)
+            get { return number; }
+            set
             {
-                throw new OverflowException
-                    ($"Please use a positive integer number more than zero!");
+                if (value < 1)
+                {
+                    throw new OverflowException
+                        ($"Please use a positive integer number more than zero!");
+                }
+                else
+                {
+                    this.number = value;
+                }
             }
-            
+        }
+
+        public NumberToString()
+        {
+        }
+        
+        public NumberToString(BigInteger number)
+        {
+            Number = number;
+        }
+
+        public override string ToString()
+        {
             var stack = new Stack<string>();
             
+            BigInteger bignumber = this.number;
             int powerOfThousand = 0;
-            while(number != 0)
+            
+            while(bignumber != 0)
             {
-                int threeDigits = (int)(number % 1000);
+                int threeDigits = (int)(bignumber % 1000);
                 if (threeDigits != 0)
                 {
                     stack.Push(NumberScaleName.ToString(powerOfThousand));
                     ThreeDigitsToString(threeDigits, stack);
                 }
-                number /= 1000;
+                bignumber /= 1000;
                 powerOfThousand++;
             }
 
