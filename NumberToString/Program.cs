@@ -1,7 +1,4 @@
-﻿using System;
-using System.Numerics;
-
-namespace NumberToString
+﻿namespace NumberToString
 {
     class Program
     {
@@ -22,7 +19,7 @@ namespace NumberToString
                         break;
                 }
             }
-            var model = new NumberToString();
+            NumberToString model = default;
             var controller = new Controller(model, view);
             controller.Run(args);
         }

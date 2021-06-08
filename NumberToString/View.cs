@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Numerics;
 
 namespace NumberToString
 {
-    class View
+    public class View
     {
         public void DisplayMessage(string text)
         {
             Console.WriteLine(text);
         }
-        
+
+        public void DisplayBigNumber(BigInteger number)
+        {
+            Console.WriteLine($"{number:N0}");
+        }
+
         public void DisplayHelp()
         {
             Console.WriteLine();

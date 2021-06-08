@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace NumberToString
 {
-    class Controller
+    public class Controller
     {
         private NumberToString model;
         private View view;
@@ -19,9 +19,9 @@ namespace NumberToString
             try
             {
                 var number = BigInteger.Parse(args[0]);
-                view.DisplayMessage($" {number:N0}");
+              //  model.Number = number;
                 
-                model.Number = number;
+                view.DisplayBigNumber(number);
                 view.DisplayMessage(model.ToString());
             }
             catch (IndexOutOfRangeException)
@@ -30,7 +30,7 @@ namespace NumberToString
             }
             catch (FormatException)
             {
-                view.DisplayMessage("The input string is not a sequence of digit!");
+                view.DisplayMessage("The input string is not a sequence of digits!");
             }
             catch (Exception ex)
             {

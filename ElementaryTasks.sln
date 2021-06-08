@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuckyTickets", "LuckyTicket
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SortingTriangles", "SortingTriangles\SortingTriangles.csproj", "{39984815-C598-4279-A9B6-5EAB095C9263}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fibonacci", "Fibonacci\Fibonacci.csproj", "{86D42064-5636-48BC-A105-6EE74FD25368}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fibonacci", "Fibonacci\Fibonacci.csproj", "{86D42064-5636-48BC-A105-6EE74FD25368}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NumberToString.Test", "NumberToString.Test\NumberToString.Test.csproj", "{C120AD70-031C-4D96-932D-3863F262D9A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{86D42064-5636-48BC-A105-6EE74FD25368}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86D42064-5636-48BC-A105-6EE74FD25368}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86D42064-5636-48BC-A105-6EE74FD25368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C120AD70-031C-4D96-932D-3863F262D9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C120AD70-031C-4D96-932D-3863F262D9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C120AD70-031C-4D96-932D-3863F262D9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C120AD70-031C-4D96-932D-3863F262D9A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,114 +1,76 @@
 ﻿namespace NumberToString
 {
-    class NumberScaleName
+    public class NumberScaleName
     {
+        private static readonly string[] SmallRanks =
+            { "", "thousand", "million", "billion", "trillion", "quadrillion",
+              "quintillion", "sextillion", "septillion", "octillion", "nonillion" };
+
+        private static readonly string[] UnitsList =
+            { "", "un", "duo", "tre", "quattuor", "quin", "se", "septe", "octo", "nove" };
+
+        private static readonly (string Tens, string[] Prefix, bool IsSuffix)[] TensList = new[]
+            {
+                (""            , new[] {"","","", "","","", "", "","", ""}, false),
+                ("deci"        , new[] {"","","", "","","", "","n","","n"}, false), // 10
+                ("viginti"     , new[] {"","","","s","","","s","m","","m"}, false), // 20
+                ("triginta"    , new[] {"","","","s","","","s","n","","n"}, true),  // 30
+                ("quadraginta" , new[] {"","","","s","","","s","n","","n"}, true),  // 40
+                ("quinquaginta", new[] {"","","","s","","","s","n","","n"}, true),  // 50
+                ("sexaginta"   , new[] {"","","", "","","", "","n","","n"}, true),  // 60
+                ("septuaginta" , new[] {"","","", "","","", "","n","","n"}, true),  // 70
+                ("octoginta"   , new[] {"","","", "","","","x","m","","m"}, true),  // 80
+                ("nonaginta"   , new[] {"","","", "","","", "", "","", ""}, true),  // 90
+            };
+
+        private static readonly (string Hundreds, string[] Prefix)[] HundredsList = new[]
+            {
+                (""            , new[] {"","","", "","","", "", "","", ""}),
+                ("centi"       , new[] {"","","", "","","","x","n","","n"}), // 100
+                ("ducenti"     , new[] {"","","","" ,"","","" ,"n","","n"}), // 200
+                ("trecenti"    , new[] {"","","","s","","","s","n","","n"}), // 300
+                ("quadringenti", new[] {"","","","s","","","s","n","","n"}), // 400
+                ("quingenti"   , new[] {"","","","s","","","s","n","","n"}), // 500
+                ("sescenti"    , new[] {"","","","" ,"","","" ,"n","","n"}), // 600
+                ("septingenti" , new[] {"","","","" ,"","","" ,"n","","n"}), // 700
+                ("octingenti"  , new[] {"","","","" ,"","","x","m","","m"}), // 800
+                ("nongenti"    , new[] {"","","","" ,"","","" ,"" ,"","" }), // 900
+            };
+
         public static string ToString(int power = 0)
         {
-            // Do this first and get out quick as it is the most used 99% of the time
-            // You may delete following line if only interested in Powers above 10 (i.e. 1,000^11 and above)
             if (power < 11)
             {
-                string[] vs = { "", "thousand", "million", "billion", "trillion", "quadrillion",
-                    "quintillion", "sextillion", "septillion", "octillion", "nonillion" };
-                return vs[power];
+                return SmallRanks[power];
             }
 
             power -= 1; // Adjust the sequence above power of 10 as these are now systematic
 
-            string[] TensList = {"", "deci", "viginti", "triginta", "quadraginta", "quinquaginta",
-                "sexaginta", "septuaginta", "octoginta", "nonaginta" };
-            /*       {{ "",{"", "", "", "", "", "", "", "", "", "", false } },
-                                   ["deci",["","","","" ,"","","" ,"n","","n",false]], // 10
-       ["viginti"     ,["","","","s","","","s","m","","m",false]], // 20
-       ["triginta"    ,["","","","s","","","s","n","","n",true ]], // 30
-       ["quadraginta" ,["","","","s","","","s","n","","n",true ]], // 40
-       ["quinquaginta",["","","","s","","","s","n","","n",true ]], // 50
-       ["sexaginta"   ,["","","","" ,"","","" ,"n","","n",true ]], // 60
-       ["septuaginta" ,["","","","" ,"","","" ,"n","","n",true ]], // 70
-       ["octoginta"   ,["","","","" ,"","","x","m","","m",true ]], // 80
-       ["nonaginta"   ,["","","","" ,"","","" ,"" ,"","" ,true ]]];  // 90*/
-
-            string[] HundredsList = { "", "centi", "ducenti", "trecenti", "quadringenti",
-                "quingenti", "sescenti", "septingenti", "octingenti", "nongenti" };
-
-            /*   = {{ "",{"", "", "", "", "", "", "", "", "", "" } },
-                                       { "centi",{"","","","" ,"","","x","n","","n"} }, // 100
-                                       {"ducenti"     ,{"","","","" ,"","","" ,"n","","n"}}, // 200
-                                       { "trecenti"    ,{"","","","s","","","s","n","","n"}}, // 300
-                                       { "quadringenti",{"","","","s","","","s","n","","n"}}, // 400
-                                       { "quingenti"   ,{"","","","s","","","s","n","","n"}}, // 500
-                                       { "sescenti"    ,{"","","","" ,"","","" ,"n","","n"}}, // 600
-                                       { "septingenti" ,{"","","","" ,"","","" ,"n","","n"}}, // 700
-                                       { "octingenti"  ,{"","","","" ,"","","x","m","","m"}}, // 800
-                                       { "nongenti"    ,{"","","","" ,"","","" ,"" ,"","" }}};  // 900*/
-
-
-            int Hund = power / 100;      // Hundred Digit
-            int Ten = power % 100 / 10; // Ten Digit
-            int Unit = power % 10 % 10;              // Unit Digit
-            string[] UnitList = { "", "un", "duo", "tre", "quattuor", "quin", "se", "septe", "octo", "nove" };
+            int hundred = power / 100;  // Hundred Digit
+            int ten = power % 100 / 10; // Ten Digit
+            int unit = power % 10 % 10; // Unit Digit
             
-            
-            string UnitName = UnitList[Unit]; // Get Unit Name from Array
-            string TenName = TensList[Ten];            // Get Tens Name from Array
-            string HundName = HundredsList[Hund];        // Get Hundreds Name from Array
-            
-            if (Unit == 6 && Ten == 8)
+            string unitName = UnitsList[unit];                // Get Unit Name from Array
+            string tenName = TensList[ten].Tens;              // Get Tens Name from Array
+            string hundName = HundredsList[hundred].Hundreds; // Get Hundreds Name from Array
+
+            // convert Ten names ending with "a" to "i" if it was preceding the "llion" word
+            if (hundred == 0 && TensList[ten].IsSuffix)
             {
-                UnitName += "x";
+                tenName = tenName[0..^1] + "i";
             }
-            
-            switch (Unit)
+
+            // Pickup and add the correct suffix to the Unit Name (s, x, n, or m)
+            if (ten != 0)
             {
-                case 3:
-                case 6:
-                    switch (Ten)
-                    {
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 5:
-                            UnitName += "s";
-                            break;
-                    }
-                    break;
-                case 7:
-                case 9:
-                    switch (Ten)
-                    {
-                        case 1:
-                        case 3:
-                        case 4:
-                        case 5:
-                        case 6:
-                        case 7:
-                            UnitName += "n";
-                            break;
-                        case 2:
-                        case 8:
-                            UnitName += "m";
-                            break;
-                    }
-                    break;
+                tenName = TensList[ten].Prefix[unit] + tenName;
             }
-            // convert Ten names ending with "a" to "i" if it was prceeding the "llion" word
-            /*    if (!Hund && TensList[Ten][1][10])
-                {
-                    TenName = TenName.slice(0, -1) + "i";
-                }
+            else if (hundred != 0)
+            {
+                hundName = HundredsList[hundred].Prefix[unit] + hundName;
+            }
 
-                // Pickup and add the correct suffix to the Unit Name (s,x,n, or m)
-                if (Ten)
-                {
-                    TenName = TensList[Ten][1][Unit] + TenName;
-                }
-
-                if (Hund && !Ten)
-                {
-                    HundName = HundredsList[Hund][1][Unit] + HundName;
-                }
-            */
-            return UnitName + TenName + HundName + "llion"; // Create name
+            return unitName + tenName + hundName + "llion"; // Create name
         }
     }
 }
