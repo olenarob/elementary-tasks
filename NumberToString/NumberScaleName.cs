@@ -1,4 +1,6 @@
-﻿namespace NumberToString
+﻿using System;
+
+namespace NumberToString
 {
     public class NumberScaleName
     {
@@ -37,8 +39,14 @@
                 ("nongenti"    , new[] {"","","","" ,"","","" ,"" ,"","" }), // 900
             };
 
-        public static string ToString(int power = 0)
+        public static string ToString(ushort power = 0)
         {
+            if (power > 999)
+            {
+                throw new ArgumentOutOfRangeException
+                    ("Use a positive integer number less than 1000!");
+            }
+
             if (power < 11)
             {
                 return SmallRanks[power];

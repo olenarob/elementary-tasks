@@ -39,7 +39,7 @@ namespace NumberToString
             var stack = new Stack<string>();
             
             BigInteger bignumber = this.number;
-            int powerOfThousand = 0;
+            ushort powerOfThousand = 0;
             
             while(bignumber != 0)
             {
