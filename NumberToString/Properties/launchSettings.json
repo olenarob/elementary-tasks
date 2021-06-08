@@ -2,7 +2,7 @@
   "profiles": {
     "NumberToString": {
       "commandName": "Project",
-      "commandLineArgs": "52635400000000000000000"
+      "commandLineArgs": "66161000 -help"
     }
   }
 }
