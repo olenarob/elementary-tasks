@@ -1,4 +1,7 @@
-﻿using System;
+﻿/*  Construct full name of the Short Scale Numeral System
+    Using the Conway-Guy system for forming number prefixes
+*/
+using System;
 
 namespace NumberToString
 {
@@ -41,10 +44,10 @@ namespace NumberToString
 
         public static string ToString(ushort power = 0)
         {
-            if (power > 999)
+            if (power > 1000)
             {
-                throw new ArgumentOutOfRangeException
-                    ("Use a positive integer number less than 1000!");
+                throw new ArgumentException(
+                    "Use a positive integer number not more than 1000!");
             }
 
             if (power < 11)

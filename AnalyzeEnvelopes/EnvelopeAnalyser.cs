@@ -44,7 +44,18 @@ namespace AnalysisOfEnvelopes
 
         private static bool IsInsertedInto(Envelope envelope1, Envelope envelope2)
         {
-            return (envelope1.ShortSide < envelope2.ShortSide) && (envelope1.LongSide < envelope2.LongSide);
+            bool success = (envelope1.ShortSide < envelope2.ShortSide) && (envelope1.LongSide < envelope2.LongSide);
+          /*  if (!success)
+            {
+                double A = envelope1.ShortSide;
+                double B = envelope1.LongSide;
+                double a = envelope2.ShortSide;
+                double b = envelope2.LongSide;
+                double alpha = Math.Asin((A * b - a * Math.Sqrt(a * a + b * b - A * A)) / (a * a + b * b));
+                double tmp = a * Math.Sin(alpha) + b * Math.Cos(alpha);
+                success = (B >= tmp);
+            }*/
+            return success;
         }
     }
 }

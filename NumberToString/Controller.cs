@@ -5,10 +5,10 @@ namespace NumberToString
 {
     public class Controller
     {
-        private NumberToString model;
+        private PositiveIntegerToString model;
         private View view;
 
-        public Controller(NumberToString model, View view)
+        public Controller(PositiveIntegerToString model, View view)
         {
             this.model = model;
             this.view = view;
@@ -18,10 +18,10 @@ namespace NumberToString
         {
             try
             {
-                var number = BigInteger.Parse(args[0]);
-                model.Number = number;
+                var userNumber = BigInteger.Parse(args[0]);
+                model.Number = userNumber;
                 
-                view.DisplayBigNumber(number);
+                view.DisplayBigNumber(userNumber);
                 view.DisplayMessage(model.ToString());
             }
             catch (IndexOutOfRangeException)

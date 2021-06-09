@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace NumberToString
 {
-    public class NumberToString
+    public class PositiveIntegerToString
     {
         private BigInteger number;
 
@@ -13,10 +13,10 @@ namespace NumberToString
             get { return number; }
             set
             {
-                if (value < 1)
+                if (value < 0)
                 {
                     throw new OverflowException
-                        ($"Please use a positive integer number more than zero!");
+                        ($"Please use a positive integer number!");
                 }
                 else
                 {
@@ -24,36 +24,32 @@ namespace NumberToString
                 }
             }
         }
-
-        public NumberToString()
-        {
-        }
         
-        public NumberToString(BigInteger number)
-        {
-            Number = number;
-        }
-
         public override string ToString()
         {
-            var stack = new Stack<string>();
+            BigInteger bigNumber = this.number;
             
-            BigInteger bignumber = this.number;
+            if (bigNumber == 0)
+            {
+                return "zero";
+            }
+            
+            var stack = new Stack<string>();
             ushort powerOfThousand = 0;
             
-            while(bignumber != 0)
+            while(bigNumber != 0)
             {
-                int threeDigits = (int)(bignumber % 1000);
+                int threeDigits = (int)(bigNumber % 1000);
                 if (threeDigits != 0)
                 {
                     stack.Push(NumberScaleName.ToString(powerOfThousand));
                     ThreeDigitsToString(threeDigits, stack);
                 }
-                bignumber /= 1000;
+                bigNumber /= 1000;
                 powerOfThousand++;
             }
 
-            return string.Join(" ", stack).ToLower();
+            return string.Join(" ", stack).Trim().ToLower();
         }
         
         private static void ThreeDigitsToString(int threeDigits, Stack<string> stack)

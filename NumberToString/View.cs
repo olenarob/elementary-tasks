@@ -19,8 +19,8 @@ namespace NumberToString
         {
             Console.WriteLine();
             Console.WriteLine("============================= Help ===========================");
-            Console.WriteLine("Usage: NumberToString.exe <integer positive number>");
-            Console.WriteLine($"The number is an integer more than zero.");
+            Console.WriteLine("Usage: NumberToString.exe <number>");
+            Console.WriteLine($"<number> - an integer more than zero.");
             Console.WriteLine();
         }
 
