@@ -2,38 +2,34 @@
 
 namespace AnalysisOfEnvelopes
 {
-    public struct Envelope
+    public class Envelope
     {
         private double shortSide;
         private double longSide;
         
-        public double ShortSide
-        {
-            get { return shortSide; }
-        }
-
-        public double LongSide
-        {
-            get { return longSide; }
-        }
-        
         public Envelope(double side1, double side2)
         {
-            ValidateSide(side1);
-            ValidateSide(side2);
-            
-            shortSide = Math.Min(side1, side2);
-            longSide  = Math.Max(side1, side2);
+            ShortSide = Math.Min(side1, side2);
+            LongSide  = Math.Max(side1, side2);
         }
-        
-        public static double ValidateSide(double value)
+
+        public double ShortSide
         {
-            if ((value <= 0) || (value > double.MaxValue))
+            get => shortSide;
+            set
             {
-                throw new OverflowException
-                    ($"The side of envelope can not be less than zero or more than {double.MaxValue}!");
+                Validation.ValidateToPositive(value);
+                shortSide = value;
             }
-            return value;
+        }
+        public double LongSide
+        {
+            get => longSide;
+            set
+            {
+                Validation.ValidateToPositive(value);
+                longSide = value;
+            }
         }
     }
 }

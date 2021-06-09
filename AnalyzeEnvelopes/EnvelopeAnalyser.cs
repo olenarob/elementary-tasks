@@ -7,27 +7,30 @@ namespace AnalysisOfEnvelopes
         private Envelope envelope1;
         private Envelope envelope2;
 
+        public Envelope Envelope1 { get => envelope1; set => envelope1 = value; }
+        public Envelope Envelope2 { get => envelope2; set => envelope2 = value; }
+
         public event Action NewPairOfEnvelopes;
         
-        public void SetEnvelopes(Envelope envelope1, Envelope envelope2)
+        public void SetEnvelopes(double[] sides)
         {
-            this.envelope1 = envelope1;
-            this.envelope2 = envelope2;
-            
+            this.Envelope1 = new Envelope(sides[0], sides[1]);
+            this.Envelope2 = new Envelope(sides[2], sides[3]);
+
             OnNewEnvelope();
         }
 
-        public string CheckInsertion()
+        public int CheckInsertion()
         {
-            string result = "None of the envelopes cannot be inserted into the other.";
+            int result = 0;
 
-            if (IsInsertedInto(envelope1, envelope2))
+            if (IsInsertedInto(Envelope1, Envelope2))
             {
-                result = $"Envelope with sides ({envelope1.ShortSide}, {envelope1.LongSide}) can be inserted into envelope with sides ({envelope2.ShortSide}, {envelope2.LongSide}).";
+                result = 1;
             }
-            else if (IsInsertedInto(envelope2, envelope1))
+            else if (IsInsertedInto(Envelope2, Envelope1))
             {
-                result = $"Envelope with sides ({envelope2.ShortSide}, {envelope2.LongSide}) can be inserted into envelope with sides ({envelope1.ShortSide}, {envelope1.LongSide}).";
+                result = -1;
             }
 
             return result;
@@ -44,18 +47,7 @@ namespace AnalysisOfEnvelopes
 
         private static bool IsInsertedInto(Envelope envelope1, Envelope envelope2)
         {
-            bool success = (envelope1.ShortSide < envelope2.ShortSide) && (envelope1.LongSide < envelope2.LongSide);
-          /*  if (!success)
-            {
-                double A = envelope1.ShortSide;
-                double B = envelope1.LongSide;
-                double a = envelope2.ShortSide;
-                double b = envelope2.LongSide;
-                double alpha = Math.Asin((A * b - a * Math.Sqrt(a * a + b * b - A * A)) / (a * a + b * b));
-                double tmp = a * Math.Sin(alpha) + b * Math.Cos(alpha);
-                success = (B >= tmp);
-            }*/
-            return success;
+            return (envelope1.ShortSide < envelope2.ShortSide) && (envelope1.LongSide < envelope2.LongSide); ;
         }
     }
 }

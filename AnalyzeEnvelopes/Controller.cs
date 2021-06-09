@@ -17,8 +17,8 @@ namespace AnalysisOfEnvelopes
 
         private void ViewMsg()
         {
-            view.DisplayMessage("");
-            view.DisplayMessage(model.CheckInsertion());
+            view.DisplayMessage(Environment.NewLine);
+            view.DisplayMessage(DisplayResult());
         }
         
         public void Run()
@@ -26,39 +26,58 @@ namespace AnalysisOfEnvelopes
             string userAnswer;
             do
             {
-                model.SetEnvelopes(GetEnvelope(1), GetEnvelope(2));
+                model.SetEnvelopes(GetSidesOfEnvelopes());
 
-                userAnswer = view.GetUserMessage("Try again? (y/yes): ");
+                userAnswer = view.GetUserInput("Try again? (yes/no): ");
             }
             while (userAnswer.Equals("y", StringComparison.CurrentCultureIgnoreCase)
                 || userAnswer.Equals("yes", StringComparison.CurrentCultureIgnoreCase));
         }
 
-        private Envelope GetEnvelope(int envelopeIndex)
+        private double[] GetSidesOfEnvelopes()
         {
-            double side1 = GetSideOfEnvelope(envelopeIndex, 1);
-            double side2 = GetSideOfEnvelope(envelopeIndex, 2);
-
-            return new Envelope(side1, side2);
+            double[] sides = new double[4];
+            
+            for (int i = 0; i < 4; i++)
+            {
+                do
+                {
+                    try
+                    {
+                        int sideIndex = i % 2 + 1;
+                        int envelopeIndex = i / 2 + 1;
+                        
+                        double tmp = double.Parse(view.GetUserInput(
+                            $"Please enter {sideIndex} side of envelope {envelopeIndex}: "));
+                        
+                        sides[i] = Validation.ValidateToPositive(tmp);
+                    }
+                    catch (Exception ex)
+                    {
+                        view.DisplayMessage(ex.Message);
+                    }
+                }
+                while (sides[i] == 0);
+            }
+            
+            return sides;
         }
 
-        private double GetSideOfEnvelope(int envelopeIndex, int sideIndex)
+        public string DisplayResult()
         {
-            double side = 0;
-            do
-            {
-                try
-                {
-                    side = Envelope.ValidateSide(double.Parse(view.GetUserMessage
-                        ($"Please enter {sideIndex} side of envelope {envelopeIndex}: ")));
-                }
-                catch (Exception ex)
-                {
-                    view.DisplayMessage(ex.Message);
-                }
-            } while (side == 0);
+            string result = "None of the envelopes cannot be inserted into the other.";
             
-            return side;
+            switch (model.CheckInsertion())
+            {
+                case -1:
+                    result = $"Envelope with sides ({model.Envelope1.ShortSide}, {model.Envelope1.LongSide}) can be inserted into envelope with sides ({model.Envelope2.ShortSide}, {model.Envelope2.LongSide}).";
+                    break;
+                case 1:
+                    result = $"Envelope with sides ({model.Envelope2.ShortSide}, {model.Envelope2.LongSide}) can be inserted into envelope with sides ({model.Envelope1.ShortSide}, {model.Envelope1.LongSide}).";
+                    break;
+            }
+
+            return result;
         }
     }
 }
