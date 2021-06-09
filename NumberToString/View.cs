@@ -20,7 +20,8 @@ namespace NumberToString
             Console.WriteLine();
             Console.WriteLine("============================= Help ===========================");
             Console.WriteLine("Usage: NumberToString.exe <number>");
-            Console.WriteLine($"<number> - an integer more than zero.");
+            Console.WriteLine();
+            Console.WriteLine($"<number> - a positive integer");
             Console.WriteLine();
         }
 

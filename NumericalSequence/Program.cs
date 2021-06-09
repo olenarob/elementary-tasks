@@ -15,6 +15,7 @@ namespace NumericalSequences
                 
                 var range = new SequenceWithLength(ulong.Parse(args[0]), minSqrt);
                 var model = new NaturalNumbers(range);
+                
                 var controller = new SequenceController(model, view);
                 controller.DisplaySequence();
             }

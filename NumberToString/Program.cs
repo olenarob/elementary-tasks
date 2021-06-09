@@ -19,6 +19,7 @@
                         break;
                 }
             }
+
             PositiveIntegerToString model = new();
             var controller = new Controller(model, view);
             controller.Run(args);

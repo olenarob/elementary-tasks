@@ -5,6 +5,9 @@ using System;
 
 namespace NumberToString
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class NumberScaleName
     {
         private static readonly string[] SmallRanks =

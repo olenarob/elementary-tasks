@@ -26,11 +26,11 @@ namespace AnalysisOfEnvelopes
 
             if (IsInsertedInto(Envelope1, Envelope2))
             {
-                result = 1;
+                result = -1;
             }
             else if (IsInsertedInto(Envelope2, Envelope1))
             {
-                result = -1;
+                result = 1;
             }
 
             return result;
