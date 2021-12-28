@@ -2,6 +2,8 @@
 
 namespace LuckyTickets
 {
+    public delegate bool Condition(int digit);
+
     public class Ticket
     {
         private string ticketNumber;
@@ -19,7 +21,7 @@ namespace LuckyTickets
             get { return ticketNumber; }
             set
             {
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < NumberOfDigits; i++)
                 {
                     if (!char.IsDigit(value[i]))
                     {
@@ -29,6 +31,8 @@ namespace LuckyTickets
                 ticketNumber = value;
             }
         }
+
+        public int NumberOfDigits => numberOfDigits;
 
         public void SetNumber(int value)
         {
@@ -40,28 +44,13 @@ namespace LuckyTickets
             return digit - '0';
         }
         
-        public static bool IsLuckySimple(Ticket ticket)
+        public static bool IsLucky(Ticket ticket, Condition condition)
         {
             int sum1 = 0;
             int sum2 = 0;
-            int half = ticket.numberOfDigits / 2;
-            for (int i = 0; i < ticket.numberOfDigits; i++)
+            for (int i = 0; i < ticket.NumberOfDigits; i++)
             {
-                if (i < half)
-                    sum1 += CharToInt(ticket.TicketNumber[i]);
-                else
-                    sum2 += CharToInt(ticket.TicketNumber[i]);
-            }
-            return sum1 == sum2;
-        }
-
-        public static bool IsLuckyComplex(Ticket ticket)
-        {
-            int sum1 = 0;
-            int sum2 = 0;
-            for (int i = 0; i < ticket.numberOfDigits; i++)
-            {
-                if (i % 2 == 0)
+                if (condition(i))
                     sum1 += CharToInt(ticket.TicketNumber[i]);
                 else
                     sum2 += CharToInt(ticket.TicketNumber[i]);

@@ -51,15 +51,17 @@ namespace LuckyTickets
         {
             int countSimple = 0;
             int countComplex = 0;
+            Condition simple = digitIndex => digitIndex > model.NumberOfDigits / 2;
+            Condition complex = digitIndex => digitIndex % 2 == 0;
 
             for (int i = minTicketNumber; i <= maxTicketNumber; i++)
             {
                 model.SetNumber(i);
 
-                if (Ticket.IsLuckySimple(model))
+                if (Ticket.IsLucky(model, simple))
                     countSimple++;
 
-                if (Ticket.IsLuckyComplex(model))
+                if (Ticket.IsLucky(model, complex))
                     countComplex++;
             }
 
