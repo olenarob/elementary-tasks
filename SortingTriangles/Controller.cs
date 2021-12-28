@@ -5,8 +5,8 @@ namespace SortingTriangles
 {
     public class Controller
     {
-        private List<Triangle> triangles;
-        private View view;
+        private readonly List<Triangle> triangles;
+        private readonly View view;
 
         public Controller(List<Triangle> triangles, View view)
         {

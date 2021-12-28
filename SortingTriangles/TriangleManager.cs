@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SortingTriangles
 {
     class TriangleManager
     {
-        
         public static Triangle GetTriangle(params string[] userInput)
         {
-            Triangle triangle = default;
-
             string name = userInput[0];
             if (name.Equals(""))
             {
@@ -32,6 +25,7 @@ namespace SortingTriangles
                 }
             }
 
+            Triangle triangle;
             if (Triangle.IsTriangle(sides[0], sides[1], sides[2]))
             {
                 triangle = new Triangle(name, sides[0], sides[1], sides[2]);
