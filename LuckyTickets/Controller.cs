@@ -51,8 +51,8 @@ namespace LuckyTickets
         {
             int countSimple = 0;
             int countComplex = 0;
-            Condition simple = digitIndex => digitIndex > model.NumberOfDigits / 2;
-            Condition complex = digitIndex => digitIndex % 2 == 0;
+            Predicate<int> simple = digitIndex => digitIndex > model.NumberOfDigits / 2;
+            Predicate<int> complex = digitIndex => digitIndex % 2 == 0;
 
             for (int i = minTicketNumber; i <= maxTicketNumber; i++)
             {

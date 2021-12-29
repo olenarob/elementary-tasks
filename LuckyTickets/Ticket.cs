@@ -2,8 +2,6 @@
 
 namespace LuckyTickets
 {
-    public delegate bool Condition(int digit);
-
     public class Ticket
     {
         private string ticketNumber;
@@ -44,7 +42,7 @@ namespace LuckyTickets
             return digit - '0';
         }
         
-        public static bool IsLucky(Ticket ticket, Condition condition)
+        public static bool IsLucky(Ticket ticket, Predicate<int> condition)
         {
             int sum1 = 0;
             int sum2 = 0;
